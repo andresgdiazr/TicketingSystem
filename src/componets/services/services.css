@@ -1,0 +1,85 @@
+/*********************************************************/
+/************** Styles de area de services **************/
+/********************************************************/
+
+.input-message-error {
+  color: rgb(251, 13, 13);
+  font-size: 0.7rem;
+}
+ 
+/*****************************************************/
+/******************* paginacion **********************/
+/*****************************************************/
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pageSice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagination > ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pagination > ul > li {
+  font-style: none;
+  padding: 5px 10px;
+  background-color: rgb(5, 78, 124);
+  background: linear-gradient(to right, #5fa2ff, #867bfe);
+  margin: 0 5px;
+  border: 1px solid rgb(5, 78, 124);
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  font-weight: 500;
+}
+.pagination > ul > li:hover {
+  background-color: white;
+  background: linear-gradient(
+    to right,
+    #ff7e5f,
+    #feb47b
+  ); /* Cambia los colores según tus preferencias */
+
+  border: 1px solid rgb(5, 78, 124);
+  color: black;
+}
+.pagination > ul > li:active {
+  background-color: rgb(189, 16, 99);
+  border: 1px solid rgb(189, 16, 99);
+  color: black;
+}
+.buttonPagination {
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
+}
+.btnPagination {
+  color: black;
+  background-color: transparent;
+  padding: 5px 5px;
+  cursor: pointer;
+  border-radius: 50px;
+  /* margin: 0 5px; */
+}
+.btnPagination:hover {
+  background-color: rgb(229, 231, 232);
+}
+
+.pagLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.activo {
+  background-color: #0a0346; /* Cambia el color según tus preferencias */
+}

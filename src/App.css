@@ -1,0 +1,363 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	transition: width 0.3s ease, margin-left 0.3s ease;
+	font-family: 'Poppins', sans-serif;
+	font-weight: 200;
+	font-size: 14px;
+}
+
+label {
+	font-weight: 700;
+	font-style: italic;
+}
+tfoot {
+	background-color: #a1a0a0;
+	color: black;
+}
+.menu-container {
+	border-bottom-right-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.toggleButton:hover {
+	background-color: #555; /* Color de fondo del botón de alternancia al pasar el ratón */
+}
+
+.marco {
+	padding: 20px;
+	font-size: 1em;
+}
+
+.courseSection {
+	display: flex;
+	.toggleButton {
+		position: absolute;
+		top: 10px;
+		left: 90%; /* Posición del botón de alternancia */
+		background-color: #333; /* Color del botón de alternancia */
+		color: #fff; /* Color del icono o texto del botón de alternancia */
+		border: none;
+		cursor: pointer;
+		padding: 5px;
+	}
+
+	.toggleButton:hover {
+		background-color: #555; /* Color de fondo del botón de alternancia al pasar el ratón */
+	}
+
+	justify-content: center;
+	align-items: start;
+}
+
+.courseSection > aside {
+	width: 50%;
+	display: block;
+	align-items: start;
+}
+
+.title-camp {
+	font-size: 1.1em;
+}
+
+.detail-camp {
+	font-size: 1em;
+	color: rgb(88, 88, 87);
+}
+
+.courseVerSection {
+	display: flex;
+	justify-content: center;
+	align-items: star;
+}
+
+.courseVerSection > aside {
+	width: 50%;
+}
+.form-marco {
+	margin: 0em 7em 3em 7em;
+	border: 1px solid black;
+	border-radius: 10px;
+	margin-top: 25px;
+}
+
+.form-marco > form {
+	margin: 20px;
+	border-radius: 0 0 10px 10 px;
+}
+
+.form-titulo {
+	background-color: black;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: left;
+	color: white;
+	border-radius: 10px 10px 0 0;
+	font-size: 2rem;
+	padding-left: 2.5rem;
+}
+
+.prinSetion {
+	display: flex;
+}
+.prinSetion > aside {
+	width: 50%;
+}
+.prinSetion > aside > img {
+	width: 100%;
+}
+.cards {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.card {
+	border-radius: 8px;
+	width: 24%;
+	box-shadow: 4px 3px 3px 2px rgb(212, 208, 208);
+}
+
+.contact {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	/* margin: 0 100px; */
+	/* border: 0.5px solid rgb(182, 180, 180); */
+	padding: 30px 20px;
+	border-radius: 6px;
+	box-shadow: 2px 3px 4px 2px rgb(212, 208, 208);
+}
+
+.btn-contact {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-items: center;
+	width: 170px;
+	height: 45px;
+	border-radius: 100px;
+	background-color: rgb(149, 59, 205);
+	margin: 20px 0 0 0;
+}
+
+.upload {
+	display: flex;
+	align-self: center;
+	justify-content: start;
+	padding: 5px 20px;
+	border-radius: 5px;
+	background-color: rgb(73, 72, 72);
+	color: white;
+	font-size: 1.05em;
+	/* margin-left: 2px; */
+	/* border border-gray-300 rounded-md shadow5-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" */
+}
+
+.btn-submit {
+	display: flex;
+	justify-content: center;
+}
+.inputUpLoad {
+	cursor: pointer;
+	margin: 0 5px;
+}
+
+.upLoadImg {
+	margin-top: 10px;
+	width: 100%;
+	border-radius: 6px;
+}
+
+.teacherGrup {
+	color: white;
+	padding: 8px 20px;
+	border-radius: 4px;
+	background-color: rgb(77, 78, 79);
+	font-size: large;
+	width: 96%;
+	margin-left: 2%;
+}
+
+.btn-segundary,
+.btn-segundary {
+	background-color: rgb(38, 38, 196);
+	outline: none;
+	border: 0;
+}
+
+/*****************************************************/
+/******************* Botones de Enlaces  *************/
+/*****************************************************/
+
+.addBtn {
+	display: flex;
+	align-items: center;
+	background-color: rgb(43, 79, 194);
+	color: white;
+	padding: 8px 6px;
+	border: 0;
+	margin-right: 1%;
+	height: 30px;
+	border-radius: 5px;
+}
+.addBtn:hover {
+	background-color: rgb(55, 102, 255);
+}
+
+.btnEdid {
+	background-color: transparent;
+	color: black;
+	padding: 1px 1px;
+	border: 0.4px solid cornsilk;
+}
+.btnShow {
+	width: 30px;
+	cursor: pointer;
+}
+.btnDel {
+	background-color: transparent;
+	color: black;
+	padding: 1px 1px;
+	border: 0.4px solid cornsilk;
+}
+
+.textCenter {
+	margin: auto;
+	text-align: center;
+	margin-top: 4%;
+	margin-bottom: 100px;
+}
+
+.tittle-search {
+	padding: 15px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.search {
+	width: 60%;
+}
+
+.tittle {
+	font-size: 2em;
+	font-weight: 600;
+	margin-left: 60px;
+}
+.frame-par {
+	height: 100px;
+	max-width: 100px;
+}
+
+.home p {
+	font-size: 1.2rem;
+}
+.event-paraaf {
+	padding-left: 30px;
+}
+.event-img {
+	height: 300px;
+	background-color: black;
+}
+@media (max-width: 950px) {
+	.home {
+		font-size: 12px;
+	}
+	.marco {
+		font-size: 0.9em;
+		padding: 13px;
+	}
+	.courseSection {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.courseSection > aside {
+		width: 100%;
+	}
+	.event-paraaf {
+		padding-left: 10px;
+		margin-top: 30px;
+	}
+}
+
+@media (max-width: 600px) {
+	h1 {
+		font-size: 1.5rem;
+	}
+	h4 {
+		font-size: 1rem;
+	}
+
+	body {
+		font-size: 12px;
+	}
+
+	.event-img {
+		height: 210px;
+		background-color: black;
+	}
+	.event-paraaf > p {
+		font-size: 0.9rem;
+	}
+	.home > p {
+		font-size: 0.9rem;
+	}
+	.home > h2 {
+		font-size: 1.2rem;
+		margin-left: 10px;
+	}
+
+	.marco {
+		font-size: 0.6em;
+		padding: 5px;
+	}
+	.contenido-derecho > p {
+		font-size: 0.9rem;
+	}
+	.footer-footer {
+		font-size: 0.6rem;
+	}
+}
+
+.contenedor-padre {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.contenido-izquierdo,
+.contenido-derecho {
+	width: 50%;
+	box-sizing: border-box;
+	padding: 10px;
+}
+
+.imagen {
+	width: 100%;
+	height: auto;
+}
+
+.parrafo {
+	width: 100%;
+}
+
+@media screen and (max-width: 950px) {
+	.contenido-izquierdo,
+	.contenido-derecho {
+		width: 100%;
+	}
+	.parrafo {
+		width: 100%;
+	}
+}

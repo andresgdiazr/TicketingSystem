@@ -1,0 +1,165 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.courseSection {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
+.courseSection > aside {
+  width: 50%;
+  display: block;
+  align-items: start;
+}
+
+.title-camp {
+  font-size: 1.1em;
+}
+
+.detail-camp {
+  font-size: 1em;
+  color: rgb(88, 88, 87);
+}
+
+.courseVerSection {
+  display: flex;
+  justify-content: center;
+  align-items: star;
+}
+
+.courseVerSection > aside {
+  width: 50%;
+}
+.form-marco {
+  margin: 0em 7em 3em 7em;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin-top: 25px;
+}
+
+.form-marco > form {
+  margin: 20px;
+  border-radius: 0 0 10px 10 px;
+}
+
+.form-titulo {
+  background-color: black;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  color: white;
+  border-radius: 10px 10px 0 0;
+  font-size: 2rem;
+  padding-left: 2.5rem;
+}
+
+.prinSetion {
+  display: flex;
+  /* justify-content: space-between; */
+}
+.prinSetion > aside {
+  width: 50%;
+}
+.prinSetion > aside > img {
+  width: 100%;
+}
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.card {
+  border-radius: 8px;
+  width: 24%;
+  box-shadow: 4px 3px 3px 2px rgb(212, 208, 208);
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 100px;
+  /* border: 0.5px solid rgb(182, 180, 180); */
+  padding: 30px 40px;
+  border-radius: 6px;
+  box-shadow: 2px 3px 5px 5px rgb(212, 208, 208);
+}
+
+.btn-contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  width: 170px;
+  height: 45px;
+  border-radius: 100px;
+  background-color: rgb(149, 59, 205);
+  margin: 20px 0 0 0;
+}
+
+@media (max-width: 850px) {
+  .courseSection {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .courseSection > aside {
+    width: 100%;
+  }
+}
+
+.upload {
+  display: flex;
+  align-self: center;
+  justify-content: start;
+  padding: 5px 20px;
+  border-radius: 5px;
+  background-color: rgb(73, 72, 72);
+  color: white;
+  font-size: 1.05em;
+  /* margin-left: 2px; */
+  /* border border-gray-300 rounded-md shadow5-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" */
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: center;
+}
+.inputUpLoad {
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.upLoadImg {
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 6px;
+}
+
+.teacherGrup {
+  color: white;
+  padding: 8px 20px;
+  border-radius: 4px;
+  background-color: rgb(77, 78, 79);
+  font-size: large;
+  width: 96%;
+  margin-left: 2%;
+}
+
+.btn-segundary {
+  /* .btn-primary { */
+  background-color: rgb(38, 38, 196);
+  outline: none;
+  border: 0;
+  width: 25%;
+  border-radius: 50px;
+}
+

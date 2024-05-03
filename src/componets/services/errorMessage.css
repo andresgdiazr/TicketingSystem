@@ -1,0 +1,18 @@
+.error-message {
+  background-color: #ffcccc;
+  border: 1px solid #ff6666;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+ 
+.dismiss-button {
+  background-color: #ff6666;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.dismiss-button:hover {
+  background-color: #ff4747;
+}
