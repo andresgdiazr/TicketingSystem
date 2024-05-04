@@ -69,7 +69,7 @@ export default function Footer() {
 			</section>
 			<section className="w-full flex justify-center p-2 bg-blue-500">
 				<p className="text-sm text-gray-50 font-light">
-					Copyright 2024 - LIPSTICK DANCE CREW - Todos los derechos
+					Copyright 2024 - FUNK UP DANCE STUDIO - Todos los derechos
 					reservados.
 				</p>
 			</section>

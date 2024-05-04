@@ -5,7 +5,7 @@ function MainSection() {
   return (
     <>
       <div className="mt-4">
-        <h2>Bienvenido a IT ACADEMY</h2>
+        <h2>Bienvenido al Sistema de Boletería de Funk Up Dance Studio</h2>
         <hr />
         <section className="prinSetion">
           <aside>

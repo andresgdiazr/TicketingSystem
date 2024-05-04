@@ -10,7 +10,7 @@ const Home = () => {
 	return (
 		<div className="p-3 w-full home">
 			<BannerSlider images={images} />
-			<h2 className="my-3">Venta de Entradas On-Líne</h2>
+			<h2 className="my-3">Registro de Entradas Online</h2>
 			<hr />
 			<br />
 			<p>

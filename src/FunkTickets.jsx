@@ -9,7 +9,7 @@ import { UsersProvider } from './hooks/UsersContext';
 import { useEffect } from 'react';
 import { FaArrowLeft, FaBars } from 'react-icons/fa';
 
-function LipsTickets() {
+function FunkTickets() {
 	const [isMenuVisible, setIsMenuVisible] = useState(true);
 	const [isVisible, setIsVisible] = useState(true);
 
@@ -57,4 +57,4 @@ function LipsTickets() {
 	);
 }
 
-export default LipsTickets;
+export default FunkTickets;

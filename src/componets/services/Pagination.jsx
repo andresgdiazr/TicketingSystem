@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { ImPrevious2 } from "react-icons/im";
 import { ImNext2 } from "react-icons/im";
-import { TbPlayerTrackNextFilled } from "react-icons/tb";
-import { TbPlayerTrackPrevFilled } from "react-icons/tb";
+import { TbPlayerTrackNext } from "react-icons/tb";
+import { TbPlayerTrackPrev } from "react-icons/tb";
 
 const Pagination = ({ items, page, pagItems, nextPage, onPageChange }) => {
   const [pageSize, setPageSize] = useState(pagItems);
@@ -111,14 +111,14 @@ const Pagination = ({ items, page, pagItems, nextPage, onPageChange }) => {
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
-            <TbPlayerTrackPrevFilled />
+            <TbPlayerTrackPrev />
           </a>
           <a
             className="btnPagination"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
-            <TbPlayerTrackNextFilled />
+            <TbPlayerTrackNext />
           </a>
           <a
             className="btnPagination"
