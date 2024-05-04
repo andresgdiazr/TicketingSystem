@@ -17,16 +17,19 @@ export default function ListEvento({ title }) {
 	const [selectedItems, setSelectedItems] = useState([]);
 	const [page, setPage] = useState(1);
 	const [itemsPage, setItemsPage] = useState(8);
-	AccessProfil();
+	
+	AccessProfil(); // Acceso por rol
+
 	let { data, isLoading, getData, deleteData } = useFetch(`${url}`);
 	const filters = [
 		{ id: 1, nombre: 'evento', descrip: 'Evento' },
 		{ id: 2, nombre: 'ubicacion', descrip: 'Ubicación' },
+		// fecha?
 	];
 
 	function handleAddEventos() {
 		const modalNivel = 2;
-		const tittle = 'Adición de Eventoss';
+		const tittle = 'Creación de Evento';
 		openModal(
 			<Eventos Evento={''} edit={false} riviewList={updateList} />,
 			null,
@@ -56,21 +59,22 @@ export default function ListEvento({ title }) {
 		const url = `${hostServer}/api/v2/event`;
 		const delId = id;
 		Swal.fire({
-			title: 'Está Seguro?',
-			text: 'Desea eliminar este regístro?',
+			title: '¿Está Seguro?',
+			text: '¿Desea eliminar este regístro?',
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Sí, Eliminar!',
+			confirmButtonText: 'Eliminar',
+			cancelButtonText: 'Cancelar',
 		}).then((result) => {
 			if (result.isConfirmed) {
 				const borrar = async () => {
 					const resp = await deleteData(url, delId);
 					getEventos();
 					await Swal.fire({
-						title: 'Eliminádo!',
-						text: 'El Eventos fué eliminádo.',
+						title: 'Evento eliminado',
+						text: 'El Eventos fue eliminado.',
 						icon: 'success',
 					});
 				};
