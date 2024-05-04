@@ -21,17 +21,12 @@ export default function Footer() {
 								className="text-blue-500"
 								size={25}
 							/>
-							Calle Nuevo Mundo, # 12321, sector Las Flores,
-							Montevideo, Uruguay.
+							Río Branco, # 1389 Montevideo, Montevideo, Uruguay.
 						</li>
 
 						<li className="flex items-center gap-2">
 							<BsTelephone className="text-blue-500" />
-							+598 543234543
-						</li>
-						<li className="flex items-center gap-2">
-							<MdOutlineMarkEmailRead className="text-blue-500" />
-							info@academy.com
+							+598 097328772
 						</li>
 					</ul>
 				</div>
@@ -40,36 +35,16 @@ export default function Footer() {
 						Acerca de nosotros
 					</h4>
 					<p>
-						Estamos aquí para la comunidad. La misión es hacer que
-						la educación de calidad sea asequible y accesible para
-						todos en esta región. Es por eso que IT Academy ofrece
-						una variedad de programas de TI a costos razonables para
-						los estudiantes.
+						Somos una academia de baile que se dedica a la enseñanza
+						de bailes urbanos y latinos. Contamos con un equipo de
+						profesionales que se dedican a la enseñanza de bailes
+						urbanos y latinos.
 					</p>
-				</div>
-				<div className="">
-					<h4 className="text-blue-500 text-xl font-semibold mb-6">
-						Redes Sociales
-					</h4>
-					<ul className="w-full flex-col gap-2">
-						<li className="flex gap-2 items-center">
-							<ImWhatsapp className="text-blue-500" />
-							WhatSapp
-						</li>
-						<li className="flex gap-2 items-center">
-							<SlSocialInstagram className="text-blue-500" />
-							Instagram
-						</li>
-						<li className="flex gap-2 items-center">
-							<TfiEmail className="text-blue-500" />
-							Correo Electrónico
-						</li>
-					</ul>
 				</div>
 			</section>
 			<section className="w-full flex justify-center p-2 bg-blue-500">
 				<p className="text-sm text-gray-50 font-light">
-					Copyright 2024 - LIPSTICK DANCE CREW - Todos los derechos
+					Copyright 2024 - FUNK UP DANCE STUDIO - Todos los derechos
 					reservados.
 				</p>
 			</section>

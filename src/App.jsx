@@ -1,8 +1,9 @@
-import LipsTickets from './LipsTickets';
+import ets from './FunkTickets';
 import './App.css';
+import FunkTickets from './FunkTickets';
 
 function App() {
-	return <LipsTickets />;
+	return <FunkTickets />;
 }
 
 export default App;
