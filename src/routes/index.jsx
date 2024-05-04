@@ -27,7 +27,7 @@ const routes = [
 		element: <Academys title={'Registro de Academias'} />,
 	},
 	{
-		path: '/Events',
+		path: '/events',
 		element: <Events title={'Gestión de Eventos'} />,
 	},
 	{
