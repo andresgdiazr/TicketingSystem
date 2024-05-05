@@ -11,8 +11,9 @@ import Papa from 'papaparse';
 export default function Evento({ evento, edit, riviewList }) {
 	const { HandleNivelClose } = useAppContext();
 	const hostServer = import.meta.env.VITE_REACT_APP_SERVER_HOST;
-	const api = `${hostServer}/api/v2/event`;
+	const apiEvent = `${hostServer}/api/v2/event`;
 	const apiStudent = `${hostServer}/api/v2/student`;
+	const apiTickets = `${hostServer}/api/v2/ticketGen`;
 	const [parsedData, setParsedData] = useState([]);
 	const [error, setError] = useState(false);
 	const initialForm = {
@@ -43,25 +44,28 @@ export default function Evento({ evento, edit, riviewList }) {
 		e.preventDefault();
 		const numError = validateForm();
 		if (!numError) {
-			let hora = `${api}`;
+			let hora = `${apiEvent}`;
 			if (!edit) {
-				await createData(api, formData); // registrar evento
+				await createData(apiEvent, formData); // registrar evento
 
 				// registrar estudiantes
 				const formData2 = new FormData();
 				// hacer un map de data.data para obtener los nombres de estudiantes
-
-				console.log("probando data: ");
-				console.log(parsedData);
+			
 				// TODO revisar el await aqui, es mas probable que ni siquiera se haga esto de registrar estudiantes aqui
+
 				parsedData.map(async (estudiante) => {
 					console.log(estudiante.nombre + " " + estudiante.apellido);
-					formData2.nombre = estudiante.nombre;
-					formData2.apellido = estudiante.apellido;
+					formData2.nombre = estudiante.nombre + " " + estudiante.apellido;
 					await createData(apiStudent, formData2);
 				});
+
+				// registrar tickets
+				const formData3 = { evento: descripcion, extra: extra, obligatoria: parsedData.length * 3 };
+
+				await createData(apiTickets, formData3); // registrar tickets
 			} else {
-				await updateData(api, evento.id, formData);
+				await updateData(apiEvent, evento.id, formData);
 			}
 		} else {
 			Swal.fire({
@@ -116,7 +120,6 @@ export default function Evento({ evento, edit, riviewList }) {
 	}, [data]);
 
    const changeFileHandler = (event) => {
-    // Passing file data (event.target.files[0]) to parse using Papa.parse
     Papa.parse(event.target.files[0], {
       header: true,
       skipEmptyLines: true,
@@ -124,18 +127,15 @@ export default function Evento({ evento, edit, riviewList }) {
         const rowsArray = [];
         const valuesArray = [];
 
-        // Iterating data to get column name and their values
         results.data.map((d) => {
           rowsArray.push(Object.keys(d));
           valuesArray.push(Object.values(d));
         });
 
-        // Parsed Data Response in array format
         setParsedData(results.data);
       },
     });
   };
-
 
 	return (
 		<>

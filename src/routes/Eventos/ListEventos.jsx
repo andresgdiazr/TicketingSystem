@@ -143,9 +143,9 @@ export default function ListEvento({ title }) {
 											<th scope="col">Costo</th>
 											<th scope="col">Fecha</th>
 											<th scope="col">Hora</th>
-											<th scope="col" colSpan={3}>
+{/* 											<th scope="col" colSpan={3}>
 												Acción
-											</th>
+											</th> */}
 										</tr>
 									</thead>
 									<tbody>
@@ -172,7 +172,7 @@ export default function ListEvento({ title }) {
 														<td>{evento.costo}</td>
 														<td>{evento.fecha} </td>
 														<td>{evento.hora} </td>
-														<td>
+{/* 														<td>
 															<TbEdit
 																className=".btnShow"
 																style={{
@@ -198,7 +198,7 @@ export default function ListEvento({ title }) {
 																	)
 																}
 															/>
-														</td>
+														</td> */}
 													</tr>
 												);
 											})

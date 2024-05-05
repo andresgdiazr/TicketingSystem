@@ -30,6 +30,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 		emailComprador: entrada ? entrada.emailComprador : '',
 		metodoPago: entrada ? entrada.metodoPago : '',
 		responsable: entrada ? entrada.responsable : '',
+		cantidad: entrada ? entrada.cantidad : '',
 	};
 
 	const { formData, onInputChange, validateForm, errorsInput, clearForm } =
@@ -41,6 +42,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 		emailComprador,
 		metodoPago,
 		responsable,
+		cantidad,
 	} = formData;
 
 	let {
@@ -99,6 +101,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 	};
 
 	const handleBlur = async () => {
+		// TODO modificar para enviar el QR
 		let api = `${hostServer}/api/v2/ticketCodigo`;
 		let url = `${api}/${codigoEntrada}`;
 		let result = await getData(url);
@@ -265,7 +268,6 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 									)}
 								</div>
 							</div>
-								
 							<div className="row mt-3">
 								<div className="form-group col-md-6">
 									<label htmlFor="emailComprador">
@@ -312,6 +314,27 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 									{errorsInput.metodoPago && (
 										<ValidateErrors
 											errors={errorsInput.metodoPago}
+										/>
+									)}
+								</div>
+							</div>
+							<div className="row mt-3">
+								<div className="form-group col-md-6">
+									<label htmlFor="cantidad">
+										Cantidad
+									</label>
+									<input
+										type="number"
+										min={0}
+										className="form-control"
+										name="cantidad"
+										placeholder="Ingrese la cantidad de entradas a vender"
+										value={cantidad}
+										onChange={onInputChange}
+									/>
+									{errorsInput.cantidad && (
+										<ValidateErrors
+											errors={errorsInput.cantidad}
 										/>
 									)}
 								</div>
