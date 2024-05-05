@@ -5,11 +5,15 @@ import { useFetch } from '../../hooks/useFetch';
 import { useForm } from '../../hooks/useForm';
 import { useAppContext } from '../../hooks/appContext';
 import Swal from 'sweetalert2';
+import Papa from 'papaparse';
+
 
 export default function Evento({ evento, edit, riviewList }) {
 	const { HandleNivelClose } = useAppContext();
 	const hostServer = import.meta.env.VITE_REACT_APP_SERVER_HOST;
 	const api = `${hostServer}/api/v2/event`;
+	const apiStudent = `${hostServer}/api/v2/student`;
+	const [parsedData, setParsedData] = useState([]);
 	const [error, setError] = useState(false);
 	const initialForm = {
 		id: evento ? evento.id : '',
@@ -25,8 +29,7 @@ export default function Evento({ evento, edit, riviewList }) {
 	const { formData, onInputChange, validateForm, errorsInput, clearForm } =
 		useForm(initialForm, validationSchema);
 
-	const { descripcion, academia, ubicacion, fecha, costo, extra, hora } = formData;
-	const codigo = '123456';
+	const {descripcion, academia, ubicacion, fecha, costo, extra, hora } = formData;
 
 	let {
 		data,
@@ -42,7 +45,21 @@ export default function Evento({ evento, edit, riviewList }) {
 		if (!numError) {
 			let hora = `${api}`;
 			if (!edit) {
-				await createData(api, formData);
+				await createData(api, formData); // registrar evento
+
+				// registrar estudiantes
+				const formData2 = new FormData();
+				// hacer un map de data.data para obtener los nombres de estudiantes
+
+				console.log("probando data: ");
+				console.log(parsedData);
+				// TODO revisar el await aqui, es mas probable que ni siquiera se haga esto de registrar estudiantes aqui
+				parsedData.map(async (estudiante) => {
+					console.log(estudiante.nombre + " " + estudiante.apellido);
+					formData2.nombre = estudiante.nombre;
+					formData2.apellido = estudiante.apellido;
+					await createData(apiStudent, formData2);
+				});
 			} else {
 				await updateData(api, evento.id, formData);
 			}
@@ -97,6 +114,28 @@ export default function Evento({ evento, edit, riviewList }) {
 			}
 		}
 	}, [data]);
+
+   const changeFileHandler = (event) => {
+    // Passing file data (event.target.files[0]) to parse using Papa.parse
+    Papa.parse(event.target.files[0], {
+      header: true,
+      skipEmptyLines: true,
+      complete: function (results) {
+        const rowsArray = [];
+        const valuesArray = [];
+
+        // Iterating data to get column name and their values
+        results.data.map((d) => {
+          rowsArray.push(Object.keys(d));
+          valuesArray.push(Object.values(d));
+        });
+
+        // Parsed Data Response in array format
+        setParsedData(results.data);
+      },
+    });
+  };
+
 
 	return (
 		<>
@@ -252,6 +291,15 @@ export default function Evento({ evento, edit, riviewList }) {
 								)}
 							</div>
 						</form>
+						<div className="row mt-3"> {/* TODO esto quizas se manda y no deberia, esta dentro del form y tiene un input pues */}
+							<input
+								type="file"
+								name="file"
+								accept=".csv"
+								onChange={changeFileHandler}
+								style={{ display: "block", margin: "10px auto" }}
+							/>
+						</div>
 					</div>
 				)
 			}
