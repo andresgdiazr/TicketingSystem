@@ -50,9 +50,8 @@ export default function Evento({ evento, edit, riviewList }) {
 
 				// registrar estudiantes
 				const formData2 = new FormData();
-				// hacer un map de data.data para obtener los nombres de estudiantes
-			
-				// TODO revisar el await aqui, es mas probable que ni siquiera se haga esto de registrar estudiantes aqui
+				
+				// TODO revisar el await aqui, es mas probable que ni siquiera se haga esto de registrar estudiantes aqui sino más bien en el back, le pasamos parsedData y que evento llame a registrar estudiantes y a registrar tickets por batch
 
 				parsedData.map(async (estudiante) => {
 					console.log(estudiante.nombre + " " + estudiante.apellido);
@@ -60,8 +59,13 @@ export default function Evento({ evento, edit, riviewList }) {
 					await createData(apiStudent, formData2);
 				});
 
+				console.log("Entradas obligatoria-extra: " + parsedData.length*3 + "-" + formData.extra);
 				// registrar tickets
-				const formData3 = { evento: descripcion, extra: extra, obligatoria: parsedData.length * 3 };
+				const formData3 = { 
+					nombreEvento: formData.descripcion,
+					obligatoria: parsedData.length * 3,
+					extra: formData.extra,
+				};
 
 				await createData(apiTickets, formData3); // registrar tickets
 			} else {
