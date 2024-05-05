@@ -11,6 +11,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 	const api = `${hostServer}/api/v2/ticket`;
 	const [error, setError] = useState(false);
 	const [eventos, setEventos] = useState([]);
+	const [responsables, setResponsables] = useState([]);
 	const inputRef = useRef(null);
 
 	AccessProfil('isSaler'); // roles
@@ -88,6 +89,12 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 		let result = await getData(url);
 		if (result) {
 			setEventos(result.data.data);
+		}
+
+		url = `${hostServer}/api/v2/students`;
+		result = await getData(url);
+		if (result) {
+			setResponsables(result.data.data);
 		}
 	};
 
@@ -238,10 +245,18 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 										name="responsable"
 										value={responsable}
 										onChange={onInputChange}
-										disabled
 									>
 										<option>Seleccione el estudiante</option>
-										{/* TODO cambiar por listado de estudiantes */}										
+										{responsables.map((res) => {
+											return (
+												<option
+													key={res.id}
+													value={res.nombre}
+												>
+													{res.nombre}
+												</option>
+											);
+										})}
 									</select>
 									{errorsInput.responsable && (
 										<ValidateErrors
