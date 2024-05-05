@@ -31,6 +31,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 		comprador: entrada ? entrada.comprador: '',
 		metodoPago: entrada ? entrada.metodoPago : '',
 		responsable: entrada ? entrada.responsable : '',
+		cantidad: entrada ? entrada.cantidad: '',
 	};
 
 	const { formData, onInputChange, validateForm, errorsInput, clearForm } =
@@ -42,6 +43,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 		emailComprador,
 		metodoPago,
 		responsable,
+		cantidad,
 		comprador,
 	} = formData;
 
@@ -56,10 +58,14 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 
 	let { getData } = useFetch(null);
 
+	console.log(formData);
+
 	const handleSubmit = async (e) => {
+	
 		e.preventDefault();
 		let errorBlur = null;
-		if (codigoEntrada) {
+
+	/*	if (codigoEntrada) {
 			errorBlur = await handleBlur();
 		} else {
 			clearForm();
@@ -70,12 +76,11 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 				return;
 			}
 			else {
-				if (!numError) {
+				if (!numError) {*/
 					const api2 = `${hostServer}/api/v2/VenderTickets`;
+					
 					const result = await updateDatas(api2, formData);
-					let url = `${hostServer}/api/v2/envioticket`;
-					envioCorreo(url, formData);
-				} else {
+			/*	} else {
 					Swal.fire({
 						position: 'top',
 						icon: 'info',
@@ -85,7 +90,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 					});
 				}
 			}
-		}
+		}*/
 	};
 
 	const getInitData = async () => {
@@ -303,6 +308,19 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 									/>
 								</div>
 								<div className="form-group col-md-6">
+									<label htmlFor="cantidad">
+										Cantidad de Entradas
+									</label>
+									<input
+										type="number"
+										className="form-control"
+										name="cantidad"
+										placeholder="Ingrese la cantidad de las entradas"
+										value={cantidad}
+										onChange={onInputChange}
+									/>
+								</div>
+								<div className="form-group col-md-6">
 									<label htmlFor="metodoPago">
 										Método de Pago
 									</label>
@@ -326,11 +344,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 											);
 										})}
 									</select>{' '}
-									{errorsInput.metodoPago && (
-										<ValidateErrors
-											errors={errorsInput.metodoPago}
-										/>
-									)}
+									
 								</div>
 							</div>
 							<div className="btn-submit mt-4">

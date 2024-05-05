@@ -57,6 +57,11 @@ export const useFetch = (url) => {
     return resp;
   };
 
+  const updateDatas = async (url, formData) =>{
+    const resp = await fetchData(url,"PUT",formData);
+    return resp;
+  }
+
   const envioCorreo = async (url, formData) => {
     const resp = await fetchData(url, "POST", formData);
     const salidaOk = {
@@ -78,5 +83,6 @@ export const useFetch = (url) => {
     updateData,
     deleteData,
     envioCorreo,
+    updateDatas,
   };
 };
