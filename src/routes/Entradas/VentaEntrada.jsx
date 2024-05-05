@@ -11,13 +11,10 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 	const api = `${hostServer}/api/v2/ticket`;
 	const [error, setError] = useState(false);
 	const [eventos, setEventos] = useState([]);
+	const [responsables, setResponsables] = useState([]);
 	const inputRef = useRef(null);
 
-	AccessProfil('isSaler');
-	const formaPagos = [
-		{ id: 1, descrip: 'Total' },
-		{ id: 2, descrip: 'Parcial' },
-	];
+	AccessProfil('isSaler'); // roles
 
 	const metodoPagos = [
 		{ id: 1, descrip: 'Efectivo' },
@@ -28,36 +25,22 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 	];
 
 	const initialForm = {
-		id: entrada ? entrada.id : '',
-		codigoEntrada: entrada ? entrada.codigoEntrada : '',
-		academia: entrada ? entrada.academia : '',
+		codigoEntrada: entrada ? entrada.codigoEntrada : '', // TODO va?
 		evento: entrada ? entrada.evento : '',
 		emailComprador: entrada ? entrada.emailComprador : '',
-		nombreComprador: entrada ? entrada.nombreComprador : '',
-		costo: entrada ? entrada.costo : 0,
-		formaPago: entrada ? entrada.formaPago : '',
-		montoPago: entrada ? entrada.montoPago : '',
 		metodoPago: entrada ? entrada.metodoPago : '',
 		responsable: entrada ? entrada.responsable : '',
-		urlAcademia: entrada ? entrada.urlAcademia : '',
 	};
 
 	const { formData, onInputChange, validateForm, errorsInput, clearForm } =
 		useForm(initialForm, validationSchema);
 
 	let {
-		id,
 		codigoEntrada,
-		academia,
 		evento,
-		costo,
 		emailComprador,
-		nombreComprador,
 		metodoPago,
-		formaPago,
-		montoPago,
 		responsable,
-		urlAcademia,
 	} = formData;
 
 	let {
@@ -83,17 +66,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 			if (e.detail === 0) {
 				return;
 			}
-			if (montoPago > costo) {
-				{
-					Swal.fire({
-						position: 'top',
-						icon: 'error',
-						title: 'El pago no puede ser mayor que el costo de la entrada.',
-						showConfirmButton: false,
-						timer: 4000,
-					});
-				}
-			} else {
+			else {
 				if (!numError) {
 					const result = await createData(api, formData);
 					let url = `${hostServer}/api/v2/envioticket`;
@@ -116,6 +89,12 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 		let result = await getData(url);
 		if (result) {
 			setEventos(result.data.data);
+		}
+
+		url = `${hostServer}/api/v2/students`;
+		result = await getData(url);
+		if (result) {
+			setResponsables(result.data.data);
 		}
 	};
 
@@ -234,118 +213,69 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 						</h1>
 						<form>
 							<div className="row mt-8">
-								<div className="form-group col-md-3">
-									<label htmlFor="text">
-										Número de Entrada
-									</label>
-									<input
-										type="text"
-										ref={inputRef}
-										className="form-control"
-										name="codigoEntrada"
-										placeholder="Ingrese númeero de emtrada."
-										value={codigoEntrada}
-										onChange={onInputChange}
-										// onKeyUp={handleBlur}
-										// onBlur={handleBlur}
-										disabled={edit ? true : false}
-									/>
-									{errorsInput.codigoEntrada && (
-										<ValidateErrors
-											errors={errorsInput.codigoEntrada}
-										/>
-									)}
-								</div>
 								<div className="form-group col-md-6">
 									<label htmlFor="evento">Evento</label>
-									<input
-										type="text"
+									<select
 										className="form-control"
 										name="evento"
 										value={evento}
 										onChange={onInputChange}
-										disabled
-									/>
+									>
+										<option>
+											Seleccione el evento
+										</option>
+										{eventos.map((ev) => {
+											return (
+												<option
+													key={ev.id}
+													value={ev.descripcion}
+												>
+													{ev.descripcion}
+												</option>
+											);
+										})}
+									</select>{' '}
 								</div>
-								<div className="form-group col-md-3">
-									<label htmlFor="costo">Costo </label>
-									<input
-										type="text"
-										className="form-control"
-										name="costo"
-										value={costo}
-										onChange={onInputChange}
-										disabled
-									/>
-									{errorsInput.costo && (
-										<ValidateErrors
-											errors={errorsInput.costo}
-										/>
-									)}{' '}
-								</div>
-							</div>
-
-							<div className="row mt-2">
 								<div className="form-group col-md-6">
 									<label htmlFor="text">
 										Responsable de Venta
 									</label>
-									<input
-										type="text"
+									<select
 										className="form-control"
 										name="responsable"
 										value={responsable}
 										onChange={onInputChange}
-										disabled
-									/>
+									>
+										<option>Seleccione el estudiante</option>
+										{responsables.map((res) => {
+											return (
+												<option
+													key={res.id}
+													value={res.nombre}
+												>
+													{res.nombre}
+												</option>
+											);
+										})}
+									</select>
 									{errorsInput.responsable && (
 										<ValidateErrors
 											errors={errorsInput.responsable}
 										/>
 									)}
 								</div>
-								<div className="form-group col-md-6">
-									<label htmlFor="urlAcademia">
-										URL de envío de Correos
-									</label>
-									<input
-										type="text"
-										className="form-control"
-										name="urlAcademia"
-										value={urlAcademia}
-										onChange={onInputChange}
-										disabled
-									/>
-								</div>
 							</div>
+								
 							<div className="row mt-3">
-								<div className="form-group col-md-6">
-									<label htmlFor="nombreComprador">
-										Nombre del Comprador{' '}
-									</label>
-									<input
-										type="text"
-										className="form-control"
-										name="nombreComprador"
-										placeholder="Ingrese Nombre Completo..."
-										value={nombreComprador}
-										onChange={onInputChange}
-									/>
-									{errorsInput.nombreComprador && (
-										<ValidateErrors
-											errors={errorsInput.nombreComprador}
-										/>
-									)}
-								</div>
 								<div className="form-group col-md-6">
 									<label htmlFor="emailComprador">
 										Correo Electrónico del Comprador
 									</label>
 									<input
-										type="text"
+										type="email"
 										className="form-control"
 										name="emailComprador"
-										placeholder="Ingrese el Correo Electónico.."
+										placeholder="Ingrese el correo electónico del comprador"
 										value={emailComprador}
 										onChange={onInputChange}
 									/>
@@ -355,10 +285,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 										/>
 									)}
 								</div>
-							</div>
-
-							<div className="row mt-3">
-								<div className="form-group col-md-4">
+								<div className="form-group col-md-6">
 									<label htmlFor="metodoPago">
 										Método de Pago
 									</label>
@@ -369,7 +296,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 										onChange={onInputChange}
 									>
 										<option>
-											Seleccione el método de Pago...
+											Seleccione el método de pago
 										</option>
 										{metodoPagos.map((metodo) => {
 											return (
@@ -388,58 +315,8 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 										/>
 									)}
 								</div>
-
-								<div className="form-group col-md-4">
-									<label htmlFor="montoPago">
-										Monto Pagado
-									</label>
-									<input
-										type="text"
-										className="form-control"
-										name="montoPago"
-										placeholder="Ingrese Nombre Completo..."
-										value={montoPago}
-										onChange={onInputChange}
-									/>
-									{errorsInput.montoPago && (
-										<ValidateErrors
-											errors={errorsInput.montoPago}
-										/>
-									)}
-								</div>
-
-								<div className="form-group col-md-4">
-									<label htmlFor="formaPago">
-										Tipo de Pago
-									</label>
-									<select
-										className="form-control"
-										name="formaPago"
-										value={formaPago}
-										onChange={onInputChange}
-									>
-										<option>
-											Seleccione el Tipo de Pago...
-										</option>
-										{formaPagos.map((tipo) => {
-											return (
-												<option
-													key={tipo.id}
-													value={tipo.descrip}
-												>
-													{tipo.descrip}
-												</option>
-											);
-										})}
-									</select>
-									{errorsInput.formaPago && (
-										<ValidateErrors
-											errors={errorsInput.formaPago}
-										/>
-									)}
-								</div>
 							</div>
-							<div className="btn-submit mt-5">
+							<div className="btn-submit mt-4">
 								{edit ? (
 									<button
 										onClick={handleSubmit}
