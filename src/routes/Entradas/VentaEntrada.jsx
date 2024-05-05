@@ -28,9 +28,9 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 		codigoEntrada: entrada ? entrada.codigoEntrada : '', // TODO va?
 		evento: entrada ? entrada.evento : '',
 		emailComprador: entrada ? entrada.emailComprador : '',
+		comprador: entrada ? entrada.comprador: '',
 		metodoPago: entrada ? entrada.metodoPago : '',
 		responsable: entrada ? entrada.responsable : '',
-		cantidad: entrada ? entrada.cantidad : '',
 	};
 
 	const { formData, onInputChange, validateForm, errorsInput, clearForm } =
@@ -42,7 +42,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 		emailComprador,
 		metodoPago,
 		responsable,
-		cantidad,
+		comprador,
 	} = formData;
 
 	let {
@@ -51,6 +51,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 		createData,
 		updateData,
 		envioCorreo,
+		updateDatas,
 	} = useFetch(null);
 
 	let { getData } = useFetch(null);
@@ -70,7 +71,8 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 			}
 			else {
 				if (!numError) {
-					const result = await createData(api, formData);
+					const api2 = `${hostServer}/api/v2/VenderTickets`;
+					const result = await updateDatas(api2, formData);
 					let url = `${hostServer}/api/v2/envioticket`;
 					envioCorreo(url, formData);
 				} else {
@@ -101,7 +103,6 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 	};
 
 	const handleBlur = async () => {
-		// TODO modificar para enviar el QR
 		let api = `${hostServer}/api/v2/ticketCodigo`;
 		let url = `${api}/${codigoEntrada}`;
 		let result = await getData(url);
@@ -268,16 +269,16 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 									)}
 								</div>
 							</div>
+								
 							<div className="row mt-3">
 								<div className="form-group col-md-6">
 									<label htmlFor="emailComprador">
 										Correo Electrónico del Comprador
 									</label>
 									<input
-										type="email"
 										className="form-control"
 										name="emailComprador"
-										placeholder="Ingrese el correo electónico del comprador"
+										placeholder="Ingrese el correo electrónico del comprador"
 										value={emailComprador}
 										onChange={onInputChange}
 									/>
@@ -286,6 +287,20 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 											errors={errorsInput.emailComprador}
 										/>
 									)}
+								</div>
+								
+								<div className="form-group col-md-6">
+									<label htmlFor="comprador">
+										Nombre del comprador
+									</label>
+									<input
+										type="email"
+										className="form-control"
+										name="comprador"
+										placeholder="Ingrese el nombre del comprador"
+										value={comprador}
+										onChange={onInputChange}
+									/>
 								</div>
 								<div className="form-group col-md-6">
 									<label htmlFor="metodoPago">
@@ -314,27 +329,6 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 									{errorsInput.metodoPago && (
 										<ValidateErrors
 											errors={errorsInput.metodoPago}
-										/>
-									)}
-								</div>
-							</div>
-							<div className="row mt-3">
-								<div className="form-group col-md-6">
-									<label htmlFor="cantidad">
-										Cantidad
-									</label>
-									<input
-										type="number"
-										min={0}
-										className="form-control"
-										name="cantidad"
-										placeholder="Ingrese la cantidad de entradas a vender"
-										value={cantidad}
-										onChange={onInputChange}
-									/>
-									{errorsInput.cantidad && (
-										<ValidateErrors
-											errors={errorsInput.cantidad}
 										/>
 									)}
 								</div>
