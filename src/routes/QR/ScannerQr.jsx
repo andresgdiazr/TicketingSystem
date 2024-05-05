@@ -28,9 +28,11 @@ function ScannerQr() {
 				disableFlip: true,
 				rememberLastUsedCamera: false,
 			});
-			// luberdino1.0@gmail.com
+			// TODO esto de verdad llega de nuestro back?
+
 			const handleSuccess = async (result) => {
 				scanner.clear();
+				console.log("Escaneo de QR: ", result);
 				await getData(`${result}`);
 				setScanResult(result);
 				setIsScanning(false); // Detener el escaneo después de un resultado exitoso
@@ -44,24 +46,26 @@ function ScannerQr() {
 	}, [isScanning]);
 
 	useEffect(() => {
-		if (data) {
-			if (data.status == 200) {
-				if (data.data) {
-					setItem(data?.data.data);
-					let saldo =
-						parseInt(data?.data.data.costo) -
-						parseInt(data.data.data.montoPagado);
-					setSaldo(saldo);
-					if (saldo == 0) {
-						setIsVerify(1);
-					}
-					if (saldo > 0) {
-						setIsVerify(2);
-					}
+		if (data && data.status == 200) {
+			if (data.data) {
+				setItem(data.data.data);
+				console.log(data.data.data.estatus);
+				if (data.data.data.estatus == 'Vendido') {
+					setIsVerify(1);
 				}
-			} else {
+				else if (data.data.data.estatus == 'Generado') {
+					setIsVerify(2);
+				}
+				else {
+					setIsVerify(3);
+				}
+			}
+			else {
+				// la data no corresponde
 				setIsVerify(3);
 			}
+		} else {
+			setIsVerify(3);
 		}
 	}, [data]);
 
@@ -72,32 +76,23 @@ function ScannerQr() {
 				<>
 					{isVerify === 3 && (
 						<div>
-							<h5>No podemos verificay el QR presentado.</h5>
+							<h5>No podemos verificar el código QR presentado.</h5>
 						</div>
 					)}
 					{isVerify === 1 && (
 						<div>
 							<h5>
-								Hemos realizado la vefificación de la Entrada{' '}
-								{item.codigoEntrada} perteneciente a{' '}
-								{item.comprador} la cual se encuentra
-								<span> Solvente</span>
-								...
+								Hemos realizado la verificación de la entrada{' '}
+								perteneciente a{' '}
+								{item.comprador}
+								para el evento {item.evento}.
 							</h5>
 						</div>
 					)}
 					{isVerify === 2 && (
 						<div>
 							<h5>
-								Hemos realizado la vefificación de la Entrada{' '}
-								{item.codigoEntrada} perteneciente a{' '}
-								{item.comprador} la cual se encuentra
-								<span>No Solvente</span>
-								...
-							</h5>
-							<h5>
-								A la fecha presenta una deuda de {saldo} sobre
-								el costo de la entrada de {item.costo}.
+								El ticket se encuentra en el sistema pero nunca se vendió.
 							</h5>
 						</div>
 					)}
@@ -107,7 +102,7 @@ function ScannerQr() {
 							onClick={handleNewScan}
 							className="btn btn-primary mt-4"
 						>
-							Nuevo Escaner
+							Nuevo escaner
 						</button>
 					</div>
 				</>
