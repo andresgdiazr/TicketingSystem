@@ -43,7 +43,9 @@ export default function Evento({ evento, edit, riviewList }) {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const numError = validateForm();
-		if (!numError) {
+
+
+		if (!numError && !isValidCSV ) {
 			let hora = `${apiEvent}`;
 			if (!edit) {
 				await createData(apiEvent, formData); // registrar evento
@@ -123,7 +125,15 @@ export default function Evento({ evento, edit, riviewList }) {
 		}
 	}, [data]);
 
+	const [file, setFile] = useState(null);
+	const [isValidCSV, setIsValidCSV] = useState(false);
+
    const changeFileHandler = (event) => {
+
+	const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+    setIsValidCSV(!(selectedFile && selectedFile.name.endsWith('.csv')));
+
     Papa.parse(event.target.files[0], {
       header: true,
       skipEmptyLines: true,
@@ -303,6 +313,15 @@ export default function Evento({ evento, edit, riviewList }) {
 								onChange={changeFileHandler}
 								style={{ display: "block", margin: "10px auto" }}
 							/>
+							{isValidCSV ? (
+       							 <div>
+          							<p>El archivo seleccionado no es un CSV válido.</p>
+        						</div>
+      						) : (
+       						 <div>
+        						  <p></p>
+        						</div>
+      						)}
 						</div>
 					</div>
 				)
