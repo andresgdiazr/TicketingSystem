@@ -37,6 +37,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 	const { formData, onInputChange, validateForm, errorsInput, clearForm } =
 		useForm(initialForm, validationSchema);
 
+		
 	let {
 		codigoEntrada,
 		evento,
@@ -80,6 +81,15 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 					const api2 = `${hostServer}/api/v2/VenderTickets`;
 					
 					const result = await updateDatas(api2, formData);
+					
+					Swal.fire({
+						position: 'top',
+						icon: 'success',
+						title: 'Se han cargado los boletos',
+						showConfirmButton: false,
+						timer: 2000,
+					  });
+
 			/*	} else {
 					Swal.fire({
 						position: 'top',
