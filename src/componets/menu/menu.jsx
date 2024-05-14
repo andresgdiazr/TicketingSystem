@@ -52,6 +52,7 @@ function Menu({ isVisible }) {
 			subItems: [],
 			icon: <FaHome />,
 		},
+		{ title: 'Iniciar sesión', route: '/LoginA', subItems: [], icon: <FaKey /> },
 		{
 			title: 'Eventos',
 			subItems: [

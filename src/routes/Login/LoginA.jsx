@@ -1,63 +1,64 @@
-import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../firebase";
+import { useState, useEffect } from "react";
+// importar de firebase
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { useFetch } from '../../hooks/useFetch';
+import { auth as fireAuth } from "../../firebase";
+import PruebaLogin from "./PruebaLogin"
 
 const LoginA = ({ title }) => {
-  const [data, setData] = useState({
-    name: "",
-    email: "",
-    password: "",
+  // TODO cambiar por el estado de autenticación
+  const [auth, setAuth] = useState(false || window.localStorage.getItem("auth") === 'true');
+  const [token, setToken] = useState(null);
+
+  // función para iniciar sesión con Google
+  const loginWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(fireAuth, provider)
+      .then((result) => {
+        if (result) {
+          setAuth(result); // TODO cambiar por el estado de autenticación
+          window.localStorage.setItem("auth", 'true');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // mantener la sesión iniciada
+  // TODO cambiar
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(fireAuth, (auth) => {
+      if (auth) {
+        setAuth(auth);
+        window.localStorage.setItem("auth", 'true');
+        // obtener el token
+        auth.getIdToken().then((token) => {
+          setToken(token);
+        });
+      } else {
+        setAuth(null);
+      }
+    });
+    return () => unsubscribe();
   });
-
-  const handleInput = (e) => {
-    const { id, value } = e.target;
-    setData({ ...data, [id]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const docRef = await addDoc(collection(db, "users"), data);
-      console.log("Document written with ID: ", docRef.id);
-    } catch (err) {
-      console.error("Error adding document: ", err);
-    }
-    console.log(docRef);
-  };
 
   return (
     <div className="new">
-      <h1>{title}</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="formInput">
-          <label htmlFor="name">Name:</label>
-          <input
-            id="name"
-            type="text"
-            value={data.name}
-            onChange={handleInput}
-          />
+      {auth ? (
+        <div>
+          <h1>¡Bienvenido!</h1>
+          <PruebaLogin token={token}></PruebaLogin>
         </div>
-        <div className="formInput">
-          <label htmlFor="email">Email:</label>
-          <input
-            id="email"
-            type="email"
-            value={data.email}
-            onChange={handleInput}
-          />
-        </div>
-        <div className="formInput">
-          <label htmlFor="password">Password:</label>
-          <input
-            id="password"
-            type="password"
-            value={data.password}
-            onChange={handleInput}
-          />
-        </div>
-        <button type="submit">Send</button>
-      </form>
+      ) : (
+        <button onClick={loginWithGoogle}>
+          Iniciar sesión con cuenta de Google
+        </button>
+      )}
     </div>
   );
 };

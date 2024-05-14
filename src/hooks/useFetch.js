@@ -75,6 +75,7 @@ export const useFetch = (url) => {
     setData(data);
     return resp;
   };
+
   return {
     data,
     isLoading,
