@@ -16,9 +16,11 @@ export default function ListVerifyEvent({ title }) {
   const [page, setPage] = useState(1);
   const [itemsPage, setItemsPage] = useState(8);
   const [evento, setEvento] = useState(8);
+  const [type, setType] = useState(8);
   const [totalEvent, setTotalEvent] = useState([]);
   const [academys, setAcademys] = useState([]);
   const [eventos, setEventos] = useState([]);
+  const [types, setTypes] = useState([]);
   const [items, setItems] = useState([]);
   const [totalTicket, setTotalTicket] = useState(0);
   const [totalPagado, setTotalPagado] = useState(0);
@@ -58,6 +60,10 @@ export default function ListVerifyEvent({ title }) {
     setEvento(e.target.value);
   };
 
+  const handdleType = (e) => {
+    setType(e.target.value);
+  };
+
   const getEntradas = async () => {
     const url = `${hostServer}/api/v2/verifyEvents`;
     const result = await getData(url);
@@ -76,6 +82,12 @@ export default function ListVerifyEvent({ title }) {
       setEventos(result.data.data);
       setEvento(result.data.data[0].descripcion);
     }
+
+    setTypes([
+      'Asistencia',
+      'Incidencias'
+    ]);
+
   };
 
   const getVerifyTicket = async (ticket) => {
@@ -104,6 +116,10 @@ export default function ListVerifyEvent({ title }) {
   }, [evento]);
 
   useEffect(() => {
+
+  }, [type]);
+
+  useEffect(() => {
     getEntradas();
     getInitData();
   }, []);
@@ -116,7 +132,7 @@ export default function ListVerifyEvent({ title }) {
         selectedItems && (
           <>
             <div className="marco">
-              <h1 className="my-3">Verificación por Eventos</h1>
+              <h1 className="my-3 font-extrabold text-2xl">Verificación por Eventos</h1>
               <div className="row mt-3">
                 <div className="form-group col-md-12">
                   <label htmlFor="evento">Seleccione Evento</label>
@@ -137,7 +153,26 @@ export default function ListVerifyEvent({ title }) {
                   </select>
                 </div>
               </div>
-
+              <div className="row mt-3">
+                <div className="form-group col-md-12">
+                  <label htmlFor="evento">Seleccione tipo de reporte</label>
+                  <select
+                    className="form-control"
+                    name="type"
+                    value={type}
+                    onChange={handdleType}
+                  >
+                    <option></option>
+                    {types.map((t) => {
+                      return (
+                        <option key={t} value={t}>
+                          {t}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
               <div className="tittle-search">
                 <div className="search">
                   <Buscador

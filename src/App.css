@@ -16,7 +16,7 @@
 
 label {
 	font-weight: 700;
-	font-style: italic;
+	/* font-style: italic; */
 }
 tfoot {
 	background-color: #a1a0a0;

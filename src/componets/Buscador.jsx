@@ -48,7 +48,7 @@ const Buscador = ({ filters, registros, onPageChange }) => {
   return (
     <div className="form-group  ">
       <form className="form-search">
-        <div className="input-search">
+        <div className="input-search space-x-4">
           <label htmlFor="campo" className="campo-search">
             Filtros :
           </label>
@@ -67,7 +67,7 @@ const Buscador = ({ filters, registros, onPageChange }) => {
           </select>
           <input
             type="text"
-            className="form-control text-search"
+            className="form-control text-search rounded-tr-none rounded-br-none"
             name="filtro"
             value={filtro}
             onChange={handleFiltroChange}

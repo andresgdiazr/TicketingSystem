@@ -39,7 +39,7 @@ function FunkTickets() {
 						</header>
 						<Menu isVisible={isVisible} />
 					</aside>
-					<section className="w-full h-full overflow-auto">
+					<section className="relative flex flex-col justify-between w-full overflow-auto">
 						<Routes>
 							{routes.map((route) => (
 								<Route
