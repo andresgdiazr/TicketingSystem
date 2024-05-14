@@ -13,11 +13,15 @@ import VerifyEvent from './Administrativo/ListVerifyEvent';
 import Login from './User/Login';
 import Logout from './User/Logout';
 import Cambio from '../routes/User/CambioClave';
-
+import LoginA from '../routes/Login/LoginA'; //Andres
 // import Exit from "./components/Exit";
 
 const routes = [
 	{ path: '/', element: <Home /> },
+	{
+		path:'/LoginA',
+		element: <LoginA title={'Prueba'} />
+	},
 	{
 		path: '/students',
 		element: <Students title={'Gestión de Estudiantes'} />,
