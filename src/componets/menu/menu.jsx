@@ -52,12 +52,12 @@ function Menu({ isVisible }) {
 			subItems: [],
 			icon: <FaHome />,
 		},
-		{ title: 'Iniciar sesión', route: '/LoginA', subItems: [], icon: <FaKey /> },
+		{ title: 'Iniciar sesión', route: '/login', subItems: [], icon: <FaKey /> },
 		{
 			title: 'Eventos',
 			subItems: [
 				{ title: 'Eventos', route: '/events' },
-				{ title: 'Ventas', route: '/ventaTicket' }
+				{ title: 'Ventas', route: '/events/ventaTicket' }
 			],
 			icon: <FaTicket />
 		},
@@ -68,9 +68,7 @@ function Menu({ isVisible }) {
 			{ title: 'Entradas', route: '/tickets' },
 			{ title: 'Ticket Vendídos', route: '/ticketsVendido' },
 		], icon: <FaList/> },
-		{ title: 'Salir', route: '/salir', subItems: [], icon: <FaKey /> },
-
-
+		{ title: 'Salir', route: '/logout', subItems: [], icon: <FaKey /> },
 
 /* 		{
 			title: 'Administración',
