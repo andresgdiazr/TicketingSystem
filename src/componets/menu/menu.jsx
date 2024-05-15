@@ -62,11 +62,14 @@ function Menu({ isVisible }) {
 		},
 
 		{ title: 'Scaner', route: '/qrTicket', subItems: [], icon: <FaQrcode/> },
-		{ title: 'Reportes', subItems: [
-			{ title: 'Verificación de evento', route: '/verifyEvent' },
-			{ title: 'Entradas', route: '/tickets' },
-			{ title: 'Ticket Vendídos', route: '/ticketsVendido' },
-		], icon: <FaList/> },
+		{ title: 'Reportes',
+		subItems: [
+			// { title: 'Descarga de Reportes', route: '/verifyEvent' },
+			// { title: 'Entradas', route: '/tickets' },
+			// { title: 'Ticket Vendídos', route: '/ticketsVendido' },
+		], 
+		route: '/verifyEvent',
+		icon: <FaList/> },
 		{ title: 'Salir', route: '/salir', subItems: [], icon: <FaKey /> },
 
 

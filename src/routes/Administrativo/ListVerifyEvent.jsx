@@ -8,6 +8,8 @@ import Swal from "sweetalert2";
 import { useFetch } from "../../hooks/useFetch";
 import { useState } from "react";
 import { TiEyeOutline } from "react-icons/ti";
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 export default function ListVerifyEvent({ title }) {
   const hostServer = import.meta.env.VITE_REACT_APP_SERVER_HOST;
@@ -95,6 +97,31 @@ export default function ListVerifyEvent({ title }) {
     return await getData(url);
   };
 
+  const exportToExcel = () => {
+    const data = [
+      ['Nombre', 'Edad', 'Email'],
+      ['Juan', 25, 'juan@example.com'],
+      ['María', 30, 'maria@example.com'],
+      ['Pedro', 28, 'pedro@example.com'],
+    ];
+  
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
+  
+    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+    const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+    const fileName = 'Reporte.xlsx';
+    saveAs(blob, fileName);
+  };
+  
+  const s2ab = (s) => {
+    const buf = new ArrayBuffer(s.length);
+    const view = new Uint8Array(buf);
+    for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
+    return buf;
+  };
+
   useEffect(() => {
     let totalTicket = 0;
     let totalPagado = 0;
@@ -132,7 +159,7 @@ export default function ListVerifyEvent({ title }) {
         selectedItems && (
           <>
             <div className="marco">
-              <h1 className="my-3 font-extrabold text-2xl">Verificación por Eventos</h1>
+              <h1 className="my-3 font-extrabold text-2xl">Descarga de Reportes</h1>
               <div className="row mt-3">
                 <div className="form-group col-md-12">
                   <label htmlFor="evento">Seleccione Evento</label>
@@ -272,7 +299,11 @@ export default function ListVerifyEvent({ title }) {
                   onPageChange={handlePageChange}
                 />
               )}
+              <div className="w-full flex justify-end">
+                <button className="bg-blue-500 text-white font-semibold p-2 rounded" onClick={exportToExcel}>Descargar Reporte</button>
+              </div>
             </div>
+            
           </>
         )
       )}
