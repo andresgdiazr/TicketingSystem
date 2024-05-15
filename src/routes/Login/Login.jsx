@@ -7,9 +7,6 @@ import { Navigate } from "react-router-dom";
 const Login = ({ title }) => {
   const user = useUsersContext();
 
-  // TODO las alertas, los mensajes de error
-  // los las redirecciones no se esperan a que se termine de validar
-  // si tengo data guardada en el localstorage entonces no deberia de pedir el login
   const loginWithGoogle = async () => {
     await user.login();
   };

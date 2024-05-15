@@ -32,7 +32,7 @@ export const UsersProvider = ({ children }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: token, // TODO todo fetch lleva authorization token
+        Authorization: token,
       },
     };
     const response = await fetch(api, options);
