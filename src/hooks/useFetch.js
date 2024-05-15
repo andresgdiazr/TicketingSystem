@@ -1,16 +1,21 @@
 import { useState, useEffect } from "react";
+import { useUsersContext } from "./UsersContext";
 
 export const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsloading] = useState(true);
- 
+  const user = useUsersContext();
+
   const fetchData = async (url, method = "GET", formData = null) => {
     setIsloading(true);
     try {
       if (!formData?.file) {
         const options = {
           method: method,
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: user.token,
+          },
           body: formData ? JSON.stringify(formData) : null,
         };
         const response = await fetch(url, options);
@@ -57,8 +62,8 @@ export const useFetch = (url) => {
     return resp;
   };
 
-  const updateDatas = async (url, formData) =>{
-    const resp = await fetchData(url,"PUT",formData);
+  const updateDatas = async (url, formData) => {
+    const resp = await fetchData(url, "PUT", formData);
     return resp;
   }
 
