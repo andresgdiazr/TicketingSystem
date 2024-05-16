@@ -13,7 +13,7 @@ import { saveAs } from 'file-saver';
 
 export default function ListVerifyEvent({ title }) {
   const hostServer = import.meta.env.VITE_REACT_APP_SERVER_HOST;
-  const url = `${hostServer}/api/v2/verifyEvents`;
+  const url = `${hostServer}/api/v2/registers`;
   const [selectedItems, setSelectedItems] = useState([]);
   const [page, setPage] = useState(1);
   const [itemsPage, setItemsPage] = useState(8);
@@ -28,17 +28,17 @@ export default function ListVerifyEvent({ title }) {
   const [totalPagado, setTotalPagado] = useState(0);
   const [totalticketEvent, setTotalticketEvent] = useState(0);
   AccessProfil();
-  let { data, isLoading, getData, deleteData } = useFetch(`${url}`);
+  let { data, isLoading, getData } = useFetch(`${url}`);
   const filters = [{ id: 1, nombre: "comprador", descrip: "Comprador" }];
 
   async function handleEdit(entrada) {
     const modalNivel = 2;
     const tittle = "Verificación de Entradas";
-    const ticket = await getVerifyTicket(entrada);
+    const registers = await getRegisters(entrada);
     getEntradas();
     openModal(
       <VerifyPendiente
-        entrada={ticket?.data?.data}
+        entrada={registers?.data?.data}
         edit={true}
         riviewList={""}
       />,
@@ -78,48 +78,53 @@ export default function ListVerifyEvent({ title }) {
     if (result) {
       setAcademys(result.data.data);
     }
-    url = `${hostServer}/api/v2/events`;
+    url = `${hostServer}/api/v2/registers`;
     result = await getData(url);
+    console.log(result)
     if (result) {
       setEventos(result.data.data);
       setEvento(result.data.data[0].descripcion);
     }
-
     setTypes([
       'Asistencia',
       'Incidencias'
     ]);
-
   };
 
-  const getVerifyTicket = async (ticket) => {
+  const getRegisters = async (ticket) => {
     let url = `${hostServer}/api/v2/ticketVenta/${ticket}`;
     return await getData(url);
   };
 
   const exportToExcel = () => {
     const data = [
-      ['Nombre', 'Edad', 'Email'],
-      ['Juan', 25, 'juan@example.com'],
-      ['María', 30, 'maria@example.com'],
-      ['Pedro', 28, 'pedro@example.com'],
+      {
+        "tipoRegistro": "Asistencia",
+        "nombreEvento": "Competencia de HipHop"
+      },
+      {
+        "tipoRegistro": "Tipo de incidencia",
+        "nombreEvento": "Competencia de HipHop"
+      },
+      {
+        "tipoRegistro": "Asistencia",
+        "nombreEvento": "Competencia de HipHop"
+      },
+      {
+        "tipoRegistro": "Tipo de incidencia",
+        "nombreEvento": "Competencia de HipHop"
+      },
     ];
-  
-    const ws = XLSX.utils.aoa_to_sheet(data);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
-  
-    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-    const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
-    const fileName = 'Reporte.xlsx';
-    saveAs(blob, fileName);
-  };
-  
-  const s2ab = (s) => {
-    const buf = new ArrayBuffer(s.length);
-    const view = new Uint8Array(buf);
-    for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
-    return buf;
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Reporte');
+
+    // Generar el archivo Excel y descargarlo
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const download = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    saveAs(download, 'Reporte.xlsx');
+
   };
 
   useEffect(() => {
@@ -216,14 +221,8 @@ export default function ListVerifyEvent({ title }) {
                 <table className="table table-striped table-bordered">
                   <thead>
                     <tr className="table-dark">
+                      <th scope="col">Tipos de Registros</th>
                       <th scope="col">Evento</th>
-                      <th scope="col">Ticket</th>
-                      <th scope="col">Comprador</th>
-                      <th scope="col">Monto Tickets</th>
-                      <th scope="col">Monto Pagado</th>
-                      <th scope="col" colSpan={1}>
-                        Acción
-                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -237,27 +236,16 @@ export default function ListVerifyEvent({ title }) {
                       </tr>
                     ) : (
                       selectedItems.map((item) => {
-                        if (item.solvencia === 1) {
                           return (
                             <tr key={item.id}>
-                              <td>{item.event}</td>
-                              <td align="center">{item.ticket}</td>
-                              <td>{item.comprador}</td>
-                              <td align="right">{item.montoTicket} </td>
-                              <td align="right">{item.montoPagado}</td>
-                              <td align="center">
-                                <TiEyeOutline
-                                  style={{ fontSize: "25px" }}
-                                  onClick={() => handleEdit(item.ticket)}
-                                />
-                              </td>
+                              <td>{item.tipoRegistro}</td>
+                              <td>{item.nombreEvento}</td>
                             </tr>
                           );
-                        }
                       })
                     )}
                   </tbody>
-                  <tfoot>
+                  {/* <tfoot>
                     <tr>
                       <td scope="col" colSpan={1}>
                         <strong className="m-1">
@@ -286,7 +274,7 @@ export default function ListVerifyEvent({ title }) {
                         </b>
                       </td>
                     </tr>
-                  </tfoot>
+                  </tfoot> */}
                 </table>
               </div>
 
