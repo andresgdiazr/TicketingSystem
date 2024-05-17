@@ -13,41 +13,41 @@ import { saveAs } from 'file-saver';
 
 export default function ListVerifyEvent({ title }) {
   const hostServer = import.meta.env.VITE_REACT_APP_SERVER_HOST;
-  const url = `${hostServer}/api/v2/registers`;
+  const url = `${hostServer}/api/v2/verifyEvents`;
   const [selectedItems, setSelectedItems] = useState([]);
   const [page, setPage] = useState(1);
   const [itemsPage, setItemsPage] = useState(8);
   const [evento, setEvento] = useState(8);
   const [type, setType] = useState(8);
   const [totalEvent, setTotalEvent] = useState([]);
-  const [academys, setAcademys] = useState([]);
+  // const [academys, setAcademys] = useState([]);
   const [eventos, setEventos] = useState([]);
   const [types, setTypes] = useState([]);
   const [items, setItems] = useState([]);
-  const [totalTicket, setTotalTicket] = useState(0);
-  const [totalPagado, setTotalPagado] = useState(0);
-  const [totalticketEvent, setTotalticketEvent] = useState(0);
+  // const [totalTicket, setTotalTicket] = useState(0);
+  // const [totalPagado, setTotalPagado] = useState(0);
+  // const [totalticketEvent, setTotalticketEvent] = useState(0);
   AccessProfil();
-  let { data, isLoading, getData } = useFetch(`${url}`);
+  let { data, isLoading, getData, deleteData } = useFetch(`${url}`);
   const filters = [{ id: 1, nombre: "comprador", descrip: "Comprador" }];
 
-  async function handleEdit(entrada) {
-    const modalNivel = 2;
-    const tittle = "Verificación de Entradas";
-    const registers = await getRegisters(entrada);
-    getEntradas();
-    openModal(
-      <VerifyPendiente
-        entrada={registers?.data?.data}
-        edit={true}
-        riviewList={""}
-      />,
-      null,
-      "medio",
-      tittle,
-      modalNivel
-    );
-  }
+  // async function handleEdit(entrada) {
+  //   const modalNivel = 2;
+  //   const tittle = "Verificación de Entradas";
+  //   const registers = await getRegisters(entrada);
+  //   getEntradas();
+  //   openModal(
+  //     <VerifyPendiente
+  //       entrada={registers?.data?.data}
+  //       edit={true}
+  //       riviewList={""}
+  //     />,
+  //     null,
+  //     "medio",
+  //     tittle,
+  //     modalNivel
+  //   );
+  // }
 
   const nextPage = (pagItems, pageCurrent) => {
     setItemsPage(pagItems);
@@ -67,34 +67,35 @@ export default function ListVerifyEvent({ title }) {
   };
 
   const getEntradas = async () => {
-    const url = `${hostServer}/api/v2/verifyEvents`;
+    // se consultan los registros
+    const url = `${hostServer}/api/v2/registers`;
     const result = await getData(url);
-    setTotalEvent(result?.data.data);
+    // setTotalEvent(result?.data.data);
+    setSelectedItems(result?.data.data);
   };
 
   const getInitData = async () => {
-    let url = `${hostServer}/api/v2/academys`;
+    // let url = `${hostServer}/api/v2/academys`;
+    // let result = await getData(url);
+    // if (result) {
+    //   setAcademys(result.data.data);
+    // }
+    let url = `${hostServer}/api/v2/events`;
     let result = await getData(url);
-    if (result) {
-      setAcademys(result.data.data);
-    }
-    url = `${hostServer}/api/v2/registers`;
-    result = await getData(url);
-    console.log(result)
     if (result) {
       setEventos(result.data.data);
       setEvento(result.data.data[0].descripcion);
     }
     setTypes([
       'Asistencia',
-      'Incidencias'
+      'Tipo de incidencia'
     ]);
   };
 
-  const getRegisters = async (ticket) => {
-    let url = `${hostServer}/api/v2/ticketVenta/${ticket}`;
-    return await getData(url);
-  };
+  // const getRegisters = async (ticket) => {
+  //   let url = `${hostServer}/api/v2/ticketVenta/${ticket}`;
+  //   return await getData(url);
+  // };
 
   const exportToExcel = () => {
     const data = [
@@ -115,6 +116,8 @@ export default function ListVerifyEvent({ title }) {
         "nombreEvento": "Competencia de HipHop"
       },
     ];
+
+    // usar el array de registros en vez de json de prueba
 
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
@@ -142,9 +145,9 @@ export default function ListVerifyEvent({ title }) {
       }
       totalticketEvent = totalticketEvent + 1;
     });
-    setTotalTicket(totalTicket);
-    setTotalPagado(totalPagado);
-    setTotalticketEvent(totalticketEvent);
+    // setTotalTicket(totalTicket);
+    // setTotalPagado(totalPagado);
+    // setTotalticketEvent(totalticketEvent);
   }, [evento]);
 
   useEffect(() => {
@@ -242,6 +245,7 @@ export default function ListVerifyEvent({ title }) {
                               <td>{item.nombreEvento}</td>
                             </tr>
                           );
+
                       })
                     )}
                   </tbody>
@@ -287,7 +291,7 @@ export default function ListVerifyEvent({ title }) {
                   onPageChange={handlePageChange}
                 />
               )}
-              <div className="w-full flex justify-end">
+              <div className="w-full flex justify-end mt-4">
                 <button className="bg-blue-500 text-white font-semibold p-2 rounded" onClick={exportToExcel}>Descargar Reporte</button>
               </div>
             </div>

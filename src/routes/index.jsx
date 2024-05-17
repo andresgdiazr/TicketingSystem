@@ -68,7 +68,10 @@ const routes = [
 			},
 			{
 				path: 'verifyEvent',
-				element: <VerifyEvent title={'Escaneo de Entradas'} />,
+				element: <PrivateRoute roles={['admin', 'staff']} />,
+				children: [
+					{ index: true, element: <VerifyEvent title={'Escaneo de Entradas'} /> },
+				]
 			},
 			{
 				path: 'contact',
