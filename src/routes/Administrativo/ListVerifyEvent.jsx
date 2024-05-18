@@ -8,6 +8,8 @@ import Swal from "sweetalert2";
 import { useFetch } from "../../hooks/useFetch";
 import { useState } from "react";
 import { TiEyeOutline } from "react-icons/ti";
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 export default function ListVerifyEvent({ title }) {
   const hostServer = import.meta.env.VITE_REACT_APP_SERVER_HOST;
@@ -16,9 +18,11 @@ export default function ListVerifyEvent({ title }) {
   const [page, setPage] = useState(1);
   const [itemsPage, setItemsPage] = useState(8);
   const [evento, setEvento] = useState(8);
+  const [type, setType] = useState(8);
   const [totalEvent, setTotalEvent] = useState([]);
   const [academys, setAcademys] = useState([]);
   const [eventos, setEventos] = useState([]);
+  const [types, setTypes] = useState([]);
   const [items, setItems] = useState([]);
   const [totalTicket, setTotalTicket] = useState(0);
   const [totalPagado, setTotalPagado] = useState(0);
@@ -58,6 +62,10 @@ export default function ListVerifyEvent({ title }) {
     setEvento(e.target.value);
   };
 
+  const handdleType = (e) => {
+    setType(e.target.value);
+  };
+
   const getEntradas = async () => {
     const url = `${hostServer}/api/v2/verifyEvents`;
     const result = await getData(url);
@@ -76,11 +84,42 @@ export default function ListVerifyEvent({ title }) {
       setEventos(result.data.data);
       setEvento(result.data.data[0].descripcion);
     }
+
+    setTypes([
+      'Asistencia',
+      'Incidencias'
+    ]);
+
   };
 
   const getVerifyTicket = async (ticket) => {
     let url = `${hostServer}/api/v2/ticketVenta/${ticket}`;
     return await getData(url);
+  };
+
+  const exportToExcel = () => {
+    const data = [
+      ['Nombre', 'Edad', 'Email'],
+      ['Juan', 25, 'juan@example.com'],
+      ['María', 30, 'maria@example.com'],
+      ['Pedro', 28, 'pedro@example.com'],
+    ];
+  
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
+  
+    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+    const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
+    const fileName = 'Reporte.xlsx';
+    saveAs(blob, fileName);
+  };
+  
+  const s2ab = (s) => {
+    const buf = new ArrayBuffer(s.length);
+    const view = new Uint8Array(buf);
+    for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
+    return buf;
   };
 
   useEffect(() => {
@@ -104,6 +143,10 @@ export default function ListVerifyEvent({ title }) {
   }, [evento]);
 
   useEffect(() => {
+
+  }, [type]);
+
+  useEffect(() => {
     getEntradas();
     getInitData();
   }, []);
@@ -116,7 +159,7 @@ export default function ListVerifyEvent({ title }) {
         selectedItems && (
           <>
             <div className="marco">
-              <h1 className="my-3">Verificación por Eventos</h1>
+              <h1 className="my-3 font-extrabold text-2xl">Descarga de Reportes</h1>
               <div className="row mt-3">
                 <div className="form-group col-md-12">
                   <label htmlFor="evento">Seleccione Evento</label>
@@ -137,7 +180,26 @@ export default function ListVerifyEvent({ title }) {
                   </select>
                 </div>
               </div>
-
+              <div className="row mt-3">
+                <div className="form-group col-md-12">
+                  <label htmlFor="evento">Seleccione tipo de reporte</label>
+                  <select
+                    className="form-control"
+                    name="type"
+                    value={type}
+                    onChange={handdleType}
+                  >
+                    <option></option>
+                    {types.map((t) => {
+                      return (
+                        <option key={t} value={t}>
+                          {t}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
               <div className="tittle-search">
                 <div className="search">
                   <Buscador
@@ -237,7 +299,11 @@ export default function ListVerifyEvent({ title }) {
                   onPageChange={handlePageChange}
                 />
               )}
+              <div className="w-full flex justify-end">
+                <button className="bg-blue-500 text-white font-semibold p-2 rounded" onClick={exportToExcel}>Descargar Reporte</button>
+              </div>
             </div>
+            
           </>
         )
       )}

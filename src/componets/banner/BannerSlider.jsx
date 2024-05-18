@@ -47,7 +47,7 @@ const BannerSlider = ({ images }) => {
 					&gt;
 				</button>
 			</div>
-			<div className="image-selector">
+			{/* <div className="image-selector">
 				{images.map((_, index) => (
 					<button
 						key={index}
@@ -59,7 +59,7 @@ const BannerSlider = ({ images }) => {
 						{index + 1}
 					</button>
 				))}
-			</div>
+			</div> */}
 		</div>
 	);
 };
