@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useRef, useState } from "react";
+import UsersProvider from "./UsersContext";
 
 const AppContext = createContext();
 export const useAppContext = () => {
@@ -15,7 +16,9 @@ export const AppContextProvider = ({ children }) => {
   };
   return (
     <AppContext.Provider value={{ HandleNivelClose }}>
-      {children}
+      <UsersProvider>
+        {children}
+      </UsersProvider>
     </AppContext.Provider>
   );
 };
