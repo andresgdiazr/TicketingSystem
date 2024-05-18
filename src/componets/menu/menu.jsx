@@ -71,6 +71,12 @@ function Menu({ isVisible }) {
 		], 
 		route: '/verifyEvent',
 		icon: <FaList/> },
+		{
+			title: 'Gestión de Usuarios',
+			route: '/users',
+			subItems: [],
+			icon: <FaGear /> 
+		},
 		{ title: 'Salir', route: '/logout', subItems: [], icon: <FaKey /> },
 
 
