@@ -11,11 +11,16 @@ export const useFetch = (url) => {
     try {
       if (!formData?.file) {
         const options = {
+
           method: method,
-          headers: {
+
+          headers: user?.token ? {
             "Content-Type": "application/json",
             Authorization: user.token,
+          } : {
+            "Content-Type": "application/json",
           },
+
           body: formData ? JSON.stringify(formData) : null,
         };
         const response = await fetch(url, options);
@@ -28,6 +33,7 @@ export const useFetch = (url) => {
         return result;
       }
     } catch (error) {
+      console.log(error)
       if (error.name !== "AbortError") {
         const data = {
           status: 500,
