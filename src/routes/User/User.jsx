@@ -107,7 +107,7 @@ export default function User({ user, edit, riviewList }) {
 						<form>
 							<div className="row">
 								<div className="form-group col-md-6">
-									<label htmlFor="nombre">Nombres </label>
+									<label htmlFor="nombre">Nombre</label>
 									<input
 										type="text"
 										className="form-control"
@@ -121,7 +121,7 @@ export default function User({ user, edit, riviewList }) {
 							<div className="row mt-3">
 								<div className="form-group col-md-6">
 									<label htmlFor="email">
-										Correo Electrónico
+										Correo electrónico
 									</label>
 									<input
 										type="email"
@@ -138,14 +138,15 @@ export default function User({ user, edit, riviewList }) {
 									)}
 								</div>
 								<div className="form-group col-md-6">
-									<label htmlFor="role">Roles</label>
+									<label htmlFor="role">Rol</label>
 									<select
 										className="form-control"
 										name="role"
 										value={role}
 										onChange={onInputChange}
+										required
 									>
-										<option>Seleccione el Role...</option>
+										<option>Seleccione el rol</option>
 										{roles.map((item) => {
 											return (
 												<option
@@ -162,7 +163,7 @@ export default function User({ user, edit, riviewList }) {
 							<div className="row mt-3">
 								<div className="form-group col-md-4">
 									<label htmlFor="status">
-										Condición del Usuário
+										Condición del usuario
 									</label>
 									<select
 										name="status"
@@ -170,7 +171,7 @@ export default function User({ user, edit, riviewList }) {
 										value={status}
 										onChange={onInputChange}
 									>
-										<option>Selecciomne opción...</option>
+										<option>Seleccione una opción</option>
 										{estatus.map((item) => {
 											return (
 												<option

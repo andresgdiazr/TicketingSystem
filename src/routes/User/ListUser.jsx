@@ -2,19 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import openModal from '../../componets/modal/OpenModal';
 import Buscador from '../../componets/Buscador';
 import Pagination from '../../componets/services/Pagination';
-import AccessProfil from '../../componets/services/AccessProfil';
 import { useFetch } from '../../hooks/useFetch';
 import User from './User';
-import { useUsersContext } from '../../hooks/UsersContext';
 
 import Swal from 'sweetalert2';
-import { FaTrashAlt } from 'react-icons/fa';
 import { TbEdit } from 'react-icons/tb';
 import { IoMdAdd } from 'react-icons/io';
 
 export default function ListUser() {
-	const { setUsersContext } = useUsersContext();
-	AccessProfil();
 	const hostServer = import.meta.env.VITE_REACT_APP_SERVER_HOST;
 	const api = `${hostServer}/api/v2/users`;
 	const ref = useRef(null);
@@ -31,7 +26,7 @@ export default function ListUser() {
 
 	function handleAddUsers() {
 		const modalNivel = 2;
-		const tittle = 'Adición de Usuarios';
+		const tittle = 'Adición de Usuario';
 		openModal(
 			<User user={''} edit={false} riviewList={updateList} />,
 			null,
@@ -43,7 +38,7 @@ export default function ListUser() {
 
 	function handleEdit(user) {
 		const modalNivel = 2;
-		const tittle = 'Edición de Usuários';
+		const tittle = 'Edición de Usuarios';
 		openModal(
 			<User user={user} edit={true} riviewList={updateList} />,
 			null,
@@ -61,21 +56,21 @@ export default function ListUser() {
 		const url = `${hostServer}/api/v2/user`;
 		const delId = id;
 		Swal.fire({
-			title: 'Está Seguro?',
-			text: 'Desea eliminar este registro?',
+			title: 'ELIMINAR USUARIO',
+			text: '¿Desea eliminar este registro?',
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Sí, Eliminar!',
+			confirmButtonText: '¡Sí, eliminar!',
 		}).then((result) => {
 			if (result.isConfirmed) {
 				const borrar = async () => {
 					const resp = await deleteData(url, delId);
 					getUsers();
 					await Swal.fire({
-						title: 'Eliminádo!',
-						text: 'El Usuário fué eliminádo.',
+						title: '¡Eliminado!',
+						text: 'El usuario fue eliminado.',
 						icon: 'success',
 					});
 				};
@@ -101,6 +96,7 @@ export default function ListUser() {
 	useEffect(() => {
 		if (data?.message || data?.message != undefined) {
 			Swal.fire(data?.message);
+			updateList();
 		}
 	}, [data]);
 
@@ -118,7 +114,7 @@ export default function ListUser() {
 				selectedItems && (
 					<div className="marco w-full h-full">
 						<h1 className="my-3 text-2xl font-bold">
-							Gestión de Usuários
+							Gestión de Usuarios
 						</h1>
 						<div className="tittle-search">
 							<div className="search">
@@ -163,9 +159,7 @@ export default function ListUser() {
 											return (
 												<tr key={user.id}>
 													<td>{user.id}</td>
-													<td>
-														{`${user.nombre} ${user.apellido}`}{' '}
-													</td>
+													<td>{user.nombre}</td>
 													<td>{user.email}</td>
 													<td>{user.role}</td>
 													<td>{user.status}</td>
@@ -178,19 +172,6 @@ export default function ListUser() {
 															}}
 															onClick={() =>
 																handleEdit(user)
-															}
-														/>
-													</td>
-													<td>
-														<FaTrashAlt
-															style={{
-																fontSize:
-																	'25px',
-															}}
-															onClick={() =>
-																handleDel(
-																	user.id,
-																)
 															}
 														/>
 													</td>
