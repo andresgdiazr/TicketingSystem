@@ -25,9 +25,8 @@ export default function ListUser() {
 	let { data, isLoading, getData, deleteData } = useFetch();
 
 	const filters = [
-		{ id: 1, nombre: 'Dni', descrip: 'Dni' },
-		{ id: 2, nombre: 'nombre', descrip: 'Nombre' },
-		{ id: 3, nombre: 'email', descrip: 'Emáil' },
+		{ id: 1, nombre: 'nombre', descrip: 'Nombre' },
+		{ id: 2, nombre: 'email', descrip: 'Email' },
 	];
 
 	function handleAddUsers() {
@@ -140,7 +139,8 @@ export default function ListUser() {
 										<th scope="col">#</th>
 										<th scope="col">Nombre</th>
 										<th scope="col">Correo Electrónico</th>
-										<th scope="col">Ciudad</th>
+										<th scope="col">Role</th>
+										<th scope="col">Status</th>
 										<th scope="col" colSpan={3}>
 											Acción
 										</th>
@@ -167,7 +167,8 @@ export default function ListUser() {
 														{`${user.nombre} ${user.apellido}`}{' '}
 													</td>
 													<td>{user.email}</td>
-													<td>{user.city}</td>
+													<td>{user.role}</td>
+													<td>{user.status}</td>
 													<td>
 														<TbEdit
 															className=".btnShow"
