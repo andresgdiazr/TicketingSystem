@@ -1,6 +1,6 @@
 * {
   margin: 0;
-  padding: 0;
+  /* padding: 0; */
   box-sizing: border-box;
 }
  
@@ -58,7 +58,7 @@
   font-weight: 500;
   color: rgb(45, 140, 240);
   padding: 8px;
-  font-size: 17px;
+  font-size: 15px;
   display: block;
 }
 
@@ -67,13 +67,11 @@
 }
 
 #html5-qrcode-button-camera-permission{
-  font-weight: 500;
-  padding: 10px 25px;
+  padding: 10px 15px;
   border-radius: 5px;
-  border: 2px solid var(--main-color);
   background-color: var(--bg-color);
   box-shadow: 4px 4px var(--main-color);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--font-color);
   cursor: pointer;
@@ -158,4 +156,24 @@
 
 .warning__icon path {
   fill: #F7C752;
+}
+
+@media (min-width: 768px) {
+  #html5-qrcode-button-camera-permission{
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 2px solid var(--main-color);
+    background-color: var(--bg-color);
+    box-shadow: 4px 4px var(--main-color);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--font-color);
+    cursor: pointer;
+    margin: 0 10px;
+  }
+
+  #html5-qrcode-anchor-scan-type-change{
+    font-size: 17px;
+  }
+  
 }
