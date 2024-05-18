@@ -13,26 +13,19 @@ export default function User({ user, edit, riviewList }) {
 	const [error, setError] = useState(false);
 
 	const roles = [
-		{ id: 1, role: 'isVerify', descrip: 'Verificador' },
-		{ id: 2, role: 'isSaler', descrip: 'Vendedor' },
-		{ id: 3, role: 'isAdmin', descrip: 'Administrador' },
+		{id:1, role: 'admin', descrip:'administrador'},
+		{id:2, role: 'staff', descrip: 'staff'},
 	];
 
 	const estatus = [
-		{ id: 1, descrip: 'Actívo' },
-		{ id: 2, descrip: 'No Actívo' },
+		{id:1, descrip: 'activo'},
+		{id:2, descrip: 'inactivo'},
 	];
 
 	const initialForm = {
 		id: user ? user.id : '',
 		nombre: user ? user.nombre : '',
-		apellido: user ? user.apellido : '',
 		email: user ? user.email : '',
-		password: user ? user.pasword : '',
-		confirmPassword: user ? user.pasword : '',
-		numTelefono: user ? user.numTelefono : '',
-		city: user ? user.city : '',
-		adress: user ? user.adress : '',
 		role: user ? user.role : '',
 		status: user ? user.status : '',
 	};
@@ -43,13 +36,7 @@ export default function User({ user, edit, riviewList }) {
 	const {
 		id,
 		nombre,
-		apellido,
 		email,
-		password,
-		confirmPassword,
-		adress,
-		numTelefono,
-		city,
 		status,
 		role,
 	} = formData;
@@ -120,7 +107,7 @@ export default function User({ user, edit, riviewList }) {
 						<form>
 							<div className="row">
 								<div className="form-group col-md-6">
-									<label htmlFor="nombre">Nombres </label>
+									<label htmlFor="nombre">Nombre</label>
 									<input
 										type="text"
 										className="form-control"
@@ -129,35 +116,12 @@ export default function User({ user, edit, riviewList }) {
 										value={nombre}
 										onChange={onInputChange}
 									/>
-									{errorsInput.nombre && (
-										<ValidateErrors
-											errors={errorsInput.nombre}
-										/>
-									)}
-								</div>
-								<div className="form-group col-md-6">
-									<label htmlFor="inputName">
-										Apelliodos{' '}
-									</label>
-									<input
-										type="text"
-										className="form-control"
-										name="apellido"
-										placeholder="Ingrese Apellidos"
-										value={apellido}
-										onChange={onInputChange}
-									/>
-									{errorsInput.apellido && (
-										<ValidateErrors
-											errors={errorsInput.apellido}
-										/>
-									)}
 								</div>
 							</div>
 							<div className="row mt-3">
 								<div className="form-group col-md-6">
 									<label htmlFor="email">
-										Correo Electrónico
+										Correo electrónico
 									</label>
 									<input
 										type="email"
@@ -174,14 +138,15 @@ export default function User({ user, edit, riviewList }) {
 									)}
 								</div>
 								<div className="form-group col-md-6">
-									<label htmlFor="role">Roles</label>
+									<label htmlFor="role">Rol</label>
 									<select
 										className="form-control"
 										name="role"
 										value={role}
 										onChange={onInputChange}
+										required
 									>
-										<option>Seleccione el Role...</option>
+										<option>Seleccione el rol</option>
 										{roles.map((item) => {
 											return (
 												<option
@@ -196,68 +161,9 @@ export default function User({ user, edit, riviewList }) {
 								</div>
 							</div>
 							<div className="row mt-3">
-								<div className="form-group col-md-6">
-									<label htmlFor="password">Contraseña</label>
-									<input
-										type="password"
-										autoComplete="on"
-										className="form-control"
-										name="password"
-										placeholder="Indique su contraseña"
-										value={password}
-										onChange={onInputChange}
-									/>
-									{errorsInput.password && (
-										<ValidateErrors
-											errors={errorsInput.password}
-										/>
-									)}
-								</div>
-								<div className="form-group col-md-6">
-									<label htmlFor="confirmPassword">
-										Confirmación de Contraseña
-									</label>
-									<input
-										type="Password"
-										className="form-control"
-										autoComplete="on"
-										name="confirmPassword"
-										placeholder="Indique su contraseña"
-										value={confirmPassword}
-										onChange={onInputChange}
-									/>
-									{errorsInput.confirmPassword && (
-										<ValidateErrors
-											errors={errorsInput.confirmPassword}
-										/>
-									)}
-								</div>
-							</div>
-							<div className="form-group">
-								<label htmlFor="adress">Address</label>
-								<input
-									type="text"
-									className="form-control"
-									name="adress"
-									placeholder="Indique su dirección principal"
-									value={adress}
-									onChange={onInputChange}
-								/>
-							</div>
-							<div className="row mt-3">
-								<div className="form-group col-md-4">
-									<label htmlFor="city">City</label>
-									<input
-										type="text"
-										className="form-control"
-										name="city"
-										value={city}
-										onChange={onInputChange}
-									/>
-								</div>
 								<div className="form-group col-md-4">
 									<label htmlFor="status">
-										Condición del Usuário
+										Condición del usuario
 									</label>
 									<select
 										name="status"
@@ -265,7 +171,7 @@ export default function User({ user, edit, riviewList }) {
 										value={status}
 										onChange={onInputChange}
 									>
-										<option>Selecciomne opción...</option>
+										<option>Seleccione una opción</option>
 										{estatus.map((item) => {
 											return (
 												<option
@@ -277,18 +183,6 @@ export default function User({ user, edit, riviewList }) {
 											);
 										})}
 									</select>
-								</div>
-								<div className="form-group col-md-4">
-									<label htmlFor="numTelefono">
-										Num. Celular
-									</label>
-									<input
-										type="text"
-										className="form-control"
-										name="numTelefono"
-										value={numTelefono}
-										onChange={onInputChange}
-									/>
 								</div>
 							</div>
 							<div className="btn-submit mt-4">
