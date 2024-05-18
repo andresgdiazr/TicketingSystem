@@ -48,8 +48,8 @@ export default function Evento({ evento, edit, riviewList }) {
 		if (!numError && !isValidCSV ) {
 			let hora = `${apiEvent}`;
 			if (!edit) {
-				await createData(apiEvent, formData); // registrar evento
-
+				const evento = await createData(apiEvent, formData); // registrar evento
+				
 				// registrar estudiantes
 				const formData2 = new FormData();
 				
@@ -63,11 +63,16 @@ export default function Evento({ evento, edit, riviewList }) {
 
 				console.log("Entradas obligatoria-extra: " + parsedData.length*3 + "-" + formData.extra);
 				// registrar tickets
+				console.log(evento);
+
 				const formData3 = { 
 					nombreEvento: formData.descripcion,
 					obligatoria: parsedData.length * 3,
 					extra: formData.extra,
+					id: evento.data.data,
 				};
+
+				
 
 				await createData(apiTickets, formData3); // registrar tickets
 			} else {
