@@ -24,7 +24,7 @@ const Login = ({ title }) => {
             <img className="h-full object-cover" src="/src/assets/bg-dance.jpg" alt="bg-dance" />
           </div>
           <div className="z-100 w-full h-full flex justify-center items-center">
-            <form action="" className="form w-[80vw] md:w-[40vw] h-[50vh] md:h-auto">
+            <div action="" className="form w-[80vw] md:w-[40vw] h-[50vh] md:h-auto">
               <p>
                   Bienvenido,<span>Iniciar sesión con</span>
               </p>
@@ -37,7 +37,7 @@ const Login = ({ title }) => {
                       <path d="M1 1h22v22H1z" fill="none"></path>
                   </svg>         Cuenta de Google
               </button>
-            </form>
+            </div>
           </div>
         </div>
       )}
