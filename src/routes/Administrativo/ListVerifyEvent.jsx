@@ -20,34 +20,34 @@ export default function ListVerifyEvent({ title }) {
   const [evento, setEvento] = useState(8);
   const [type, setType] = useState(8);
   const [totalEvent, setTotalEvent] = useState([]);
-  const [academys, setAcademys] = useState([]);
+  // const [academys, setAcademys] = useState([]);
   const [eventos, setEventos] = useState([]);
   const [types, setTypes] = useState([]);
   const [items, setItems] = useState([]);
-  const [totalTicket, setTotalTicket] = useState(0);
-  const [totalPagado, setTotalPagado] = useState(0);
-  const [totalticketEvent, setTotalticketEvent] = useState(0);
+  // const [totalTicket, setTotalTicket] = useState(0);
+  // const [totalPagado, setTotalPagado] = useState(0);
+  // const [totalticketEvent, setTotalticketEvent] = useState(0);
   AccessProfil();
   let { data, isLoading, getData, deleteData } = useFetch(`${url}`);
   const filters = [{ id: 1, nombre: "comprador", descrip: "Comprador" }];
 
-  async function handleEdit(entrada) {
-    const modalNivel = 2;
-    const tittle = "Verificación de Entradas";
-    const ticket = await getVerifyTicket(entrada);
-    getEntradas();
-    openModal(
-      <VerifyPendiente
-        entrada={ticket?.data?.data}
-        edit={true}
-        riviewList={""}
-      />,
-      null,
-      "medio",
-      tittle,
-      modalNivel
-    );
-  }
+  // async function handleEdit(entrada) {
+  //   const modalNivel = 2;
+  //   const tittle = "Verificación de Entradas";
+  //   const registers = await getRegisters(entrada);
+  //   getEntradas();
+  //   openModal(
+  //     <VerifyPendiente
+  //       entrada={registers?.data?.data}
+  //       edit={true}
+  //       riviewList={""}
+  //     />,
+  //     null,
+  //     "medio",
+  //     tittle,
+  //     modalNivel
+  //   );
+  // }
 
   const nextPage = (pagItems, pageCurrent) => {
     setItemsPage(pagItems);
@@ -67,59 +67,67 @@ export default function ListVerifyEvent({ title }) {
   };
 
   const getEntradas = async () => {
-    const url = `${hostServer}/api/v2/verifyEvents`;
+    // se consultan los registros
+    const url = `${hostServer}/api/v2/registers`;
     const result = await getData(url);
-    setTotalEvent(result?.data.data);
+    // setTotalEvent(result?.data.data);
+    setSelectedItems(result?.data.data);
   };
 
   const getInitData = async () => {
-    let url = `${hostServer}/api/v2/academys`;
+    // let url = `${hostServer}/api/v2/academys`;
+    // let result = await getData(url);
+    // if (result) {
+    //   setAcademys(result.data.data);
+    // }
+    let url = `${hostServer}/api/v2/events`;
     let result = await getData(url);
-    if (result) {
-      setAcademys(result.data.data);
-    }
-    url = `${hostServer}/api/v2/events`;
-    result = await getData(url);
     if (result) {
       setEventos(result.data.data);
       setEvento(result.data.data[0].descripcion);
     }
-
     setTypes([
       'Asistencia',
-      'Incidencias'
+      'Tipo de incidencia'
     ]);
-
   };
 
-  const getVerifyTicket = async (ticket) => {
-    let url = `${hostServer}/api/v2/ticketVenta/${ticket}`;
-    return await getData(url);
-  };
+  // const getRegisters = async (ticket) => {
+  //   let url = `${hostServer}/api/v2/ticketVenta/${ticket}`;
+  //   return await getData(url);
+  // };
 
   const exportToExcel = () => {
     const data = [
-      ['Nombre', 'Edad', 'Email'],
-      ['Juan', 25, 'juan@example.com'],
-      ['María', 30, 'maria@example.com'],
-      ['Pedro', 28, 'pedro@example.com'],
+      {
+        "tipoRegistro": "Asistencia",
+        "nombreEvento": "Competencia de HipHop"
+      },
+      {
+        "tipoRegistro": "Tipo de incidencia",
+        "nombreEvento": "Competencia de HipHop"
+      },
+      {
+        "tipoRegistro": "Asistencia",
+        "nombreEvento": "Competencia de HipHop"
+      },
+      {
+        "tipoRegistro": "Tipo de incidencia",
+        "nombreEvento": "Competencia de HipHop"
+      },
     ];
-  
-    const ws = XLSX.utils.aoa_to_sheet(data);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
-  
-    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-    const blob = new Blob([s2ab(wbout)], { type: 'application/octet-stream' });
-    const fileName = 'Reporte.xlsx';
-    saveAs(blob, fileName);
-  };
-  
-  const s2ab = (s) => {
-    const buf = new ArrayBuffer(s.length);
-    const view = new Uint8Array(buf);
-    for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
-    return buf;
+
+    // usar el array de registros en vez de json de prueba
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Reporte');
+
+    // Generar el archivo Excel y descargarlo
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const download = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    saveAs(download, 'Reporte.xlsx');
+
   };
 
   useEffect(() => {
@@ -137,9 +145,9 @@ export default function ListVerifyEvent({ title }) {
       }
       totalticketEvent = totalticketEvent + 1;
     });
-    setTotalTicket(totalTicket);
-    setTotalPagado(totalPagado);
-    setTotalticketEvent(totalticketEvent);
+    // setTotalTicket(totalTicket);
+    // setTotalPagado(totalPagado);
+    // setTotalticketEvent(totalticketEvent);
   }, [evento]);
 
   useEffect(() => {
@@ -216,14 +224,8 @@ export default function ListVerifyEvent({ title }) {
                 <table className="table table-striped table-bordered">
                   <thead>
                     <tr className="table-dark">
+                      <th scope="col">Tipos de Registros</th>
                       <th scope="col">Evento</th>
-                      <th scope="col">Ticket</th>
-                      <th scope="col">Comprador</th>
-                      <th scope="col">Monto Tickets</th>
-                      <th scope="col">Monto Pagado</th>
-                      <th scope="col" colSpan={1}>
-                        Acción
-                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -237,27 +239,17 @@ export default function ListVerifyEvent({ title }) {
                       </tr>
                     ) : (
                       selectedItems.map((item) => {
-                        if (item.solvencia === 1) {
                           return (
                             <tr key={item.id}>
-                              <td>{item.event}</td>
-                              <td align="center">{item.ticket}</td>
-                              <td>{item.comprador}</td>
-                              <td align="right">{item.montoTicket} </td>
-                              <td align="right">{item.montoPagado}</td>
-                              <td align="center">
-                                <TiEyeOutline
-                                  style={{ fontSize: "25px" }}
-                                  onClick={() => handleEdit(item.ticket)}
-                                />
-                              </td>
+                              <td>{item.tipoRegistro}</td>
+                              <td>{item.nombreEvento}</td>
                             </tr>
                           );
-                        }
+
                       })
                     )}
                   </tbody>
-                  <tfoot>
+                  {/* <tfoot>
                     <tr>
                       <td scope="col" colSpan={1}>
                         <strong className="m-1">
@@ -286,7 +278,7 @@ export default function ListVerifyEvent({ title }) {
                         </b>
                       </td>
                     </tr>
-                  </tfoot>
+                  </tfoot> */}
                 </table>
               </div>
 
@@ -299,7 +291,7 @@ export default function ListVerifyEvent({ title }) {
                   onPageChange={handlePageChange}
                 />
               )}
-              <div className="w-full flex justify-end">
+              <div className="w-full flex justify-end mt-4">
                 <button className="bg-blue-500 text-white font-semibold p-2 rounded" onClick={exportToExcel}>Descargar Reporte</button>
               </div>
             </div>
