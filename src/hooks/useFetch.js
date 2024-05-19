@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import { useUsersContext } from "./UsersContext";
-import { useNavigate } from "react-router-dom";
 
 
 export const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsloading] = useState(true);
   const user = useUsersContext();
-  const navigate = useNavigate();
 
   const fetchData = async (url, method = "GET", formData = null) => {
     setIsloading(true);
@@ -33,11 +31,16 @@ export const useFetch = (url) => {
           data: await responseData,
         };
 
-        if(result.status === 403){
-          console.log(result);
-          navigate("/error");
+        if(response.status === 403){
+          const data = {
+            status: 403,
+            message: "Usuario no tiene permiso",
+            exito: false,
+            errorSystem: await result.data.message,
+          };
+          setData(data);
+          return null;
         }
-        
 
         setData(result);
         return result;
