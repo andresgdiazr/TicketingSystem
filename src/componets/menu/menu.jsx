@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../menu/menu.css'; // Archivo CSS donde definiremos los estilos
 import { FaHome, FaKey, FaList, FaQrcode  } from 'react-icons/fa';
 import { FaGear, FaTicket } from 'react-icons/fa6';
+import { useUsersContext } from "../../hooks/UsersContext";
 
 function MenuItem({ item, isVisible, icon }) {
 	const [isOpen, setIsOpen] = useState(false);
@@ -45,73 +46,48 @@ function MenuItem({ item, isVisible, icon }) {
 }
 
 function Menu({ isVisible }) {
-	const menuItems = [
-		{
-			title: 'Home',
-			route: '/',
-			subItems: [],
-			icon: <FaHome />,
-		},
-		{ title: 'Iniciar sesión', route: '/login', subItems: [], icon: <FaKey /> },
-		{
-			title: 'Eventos',
-			subItems: [
-				{ title: 'Eventos', route: '/events' },
-				{ title: 'Ventas', route: '/events/ventaTicket' }
-			],
-			icon: <FaTicket />
-		},
 
-		{ title: 'Scaner', route: '/qrTicket', subItems: [], icon: <FaQrcode/> },
-		{ title: 'Reportes',
-		subItems: [
-			// { title: 'Descarga de Reportes', route: '/verifyEvent' },
-			// { title: 'Entradas', route: '/tickets' },
-			// { title: 'Ticket Vendídos', route: '/ticketsVendido' },
-		], 
-		route: '/verifyEvent',
-		icon: <FaList/> },
-		{
-			title: 'Gestión de Usuarios',
-			route: '/users',
-			subItems: [],
-			icon: <FaGear /> 
-		},
-		{ title: 'Salir', route: '/logout', subItems: [], icon: <FaKey /> },
+	const usersContext = useUsersContext();
+	var menuItems = [];
 
+	if(usersContext.token){
+		const initMenu = [
+			{	title: 'Home', route: '/', subItems: [], icon: <FaHome /> },			
+			{ 	title: 'Salir', route: '/logout', subItems: [], icon: <FaKey /> },
+		];
+		var auxi = [];
+		if(usersContext.role == 'admin'){
+			auxi = [
+				initMenu[0],
+				{ 	title: 'Eventos',
+					subItems: [
+						{ title: 'Eventos', route: '/events' },
+						{ title: 'Ventas', route: '/events/ventaTicket' }
+					],
+					icon: <FaTicket />
+				},
+				{ title: 'Reportes', subItems: [], route: '/verifyEvent', icon: <FaList/> },
+				{ title: 'Scaner', route: '/qrTicket', subItems: [], icon: <FaQrcode/> },
+				{ title: 'Gestión de Usuarios',	route: '/users', subItems: [], icon: <FaGear />	},
+				initMenu[1]
+			];
 
+		}
+		if(usersContext.role == 'staff'){
+			auxi = [
+				initMenu[0],
+				{ title: 'Scaner', route: '/qrTicket', subItems: [], icon: <FaQrcode/> },
+				initMenu[1]
+			];
+		}
+		menuItems = auxi;
+	}else{
+		menuItems = [
+			{	title: 'Home', route: '/', subItems: [], icon: <FaHome />},
+			{ 	title: 'Iniciar sesión', route: '/login', subItems: [], icon: <FaKey /> },
+		];
+	}
 
-/* 		{
-			title: 'Administración',
-			subItems: [
-				{ title: 'Academias', route: '/academias' },
-				{ title: 'Estudiante', route: '/students' },
-				
-				{ title: 'Entradas', route: '/tickets' },
-				{ title: 'Ticket Vendídos', route: '/ticketsVendido' },
-				{ title: 'Usuarios', route: '/users' },
-				{ title: 'Contactos', route: '/contact' },
-			],
-			icon: <FaGear />,
-		}, */
-		/* {
-			title: 'Listados',
-			subItems: [
-				{ title: 'Gestión Administratíva', route: '/getionAdmin' },
-				{ title: 'Verificación de Evento', route: '/verifyEvent' },
-			],
-			icon: <FaList />,
-		}, */
-		/* {
-			title: 'Accesos',
-			subItems: [
-				{ title: 'Cambio de Clave', route: '/cambioClave' },
-				{ title: 'Inicio de Sesión', route: '/login' },
-				{ title: 'Salír', route: '/salir', icon: <FaKey /> },
-			],
-			icon: <FaKey />,
-		}, */
-	];
 
 	return (
 		<div className="menu overflow-auto">
