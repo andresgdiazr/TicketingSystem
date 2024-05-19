@@ -17,6 +17,7 @@ export default function ListEvento({ title }) {
 	const [selectedItems, setSelectedItems] = useState([]);
 	const [page, setPage] = useState(1);
 	const [itemsPage, setItemsPage] = useState(8);
+	const [error, setError] = useState(false);
 	
 	AccessProfil(); // Acceso por rol
 
@@ -52,7 +53,9 @@ export default function ListEvento({ title }) {
 	}
 
 	const updateList = async () => {
-		await getEventos();
+		if(!error){
+			await getEventos();
+		}
 	};
 
 	const handleDel = async (id) => {
@@ -95,6 +98,9 @@ export default function ListEvento({ title }) {
 	const getEventos = async () => {
 		const url = `${hostServer}/api/v2/events`;
 		const result = await getData(url);
+		if(result === null){
+			setError(true);
+		}
 	};
 
 	useEffect(() => {
@@ -104,7 +110,9 @@ export default function ListEvento({ title }) {
 	}, [data]);
 
 	useEffect(() => {
-		getEventos();
+		if(!error){
+			getEventos();
+		}
 	}, []);
 
 	return (
@@ -127,12 +135,14 @@ export default function ListEvento({ title }) {
 										onPageChange={handlePageChange}
 									/>
 								</div>
-								<button
+								{
+									!error ? <button
 									className="addBtn"
 									onClick={handleAddEventos}
 								>
 									<IoMdAdd />
-								</button>
+								</button> : null
+								}
 							</div>
 							<div className="table-responsive">
 								<table className="table table-striped table-bordered">
@@ -150,12 +160,11 @@ export default function ListEvento({ title }) {
 										</tr>
 									</thead>
 									<tbody>
-										{data?.status === 500 ? (
+										{data?.status === 500 | data?.status === 403 ? (
 											<tr>
 												<td scope="col" colSpan={12}>
 													<h3 className="textCenter">
-														No hay información para
-														esta Entidad.
+													{!error ? "No hay información para esta Entidad" : "Usuario no tiene permiso"}
 													</h3>
 												</td>
 											</tr>
