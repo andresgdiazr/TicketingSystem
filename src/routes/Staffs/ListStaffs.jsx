@@ -5,20 +5,19 @@ import Buscador from '../../componets/Buscador';
 import { useFetch } from '../../hooks/useFetch';
 import Swal from 'sweetalert2';
 import { FaTrashAlt } from 'react-icons/fa';
-import { TbEdit } from 'react-icons/tb';
 import { IoMdAdd } from 'react-icons/io';
 
 import Staffs from './Staffs';
 
 export default function ListEvento({ title }) {
 	const hostServer = import.meta.env.VITE_REACT_APP_SERVER_HOST;
-	const urlHistory = `${hostServer}/api/v2/history/`;
+	const urlHistory = `${hostServer}/api/v2/history`;
 	const [selectedItems, setSelectedItems] = useState([]);
 	const [page, setPage] = useState(1);
 	const [itemsPage, setItemsPage] = useState(8);
 	const [error, setError] = useState(false);
 	
-	let { data, isLoading, getData } = useFetch(`${urlHistory}`);
+	let { data, isLoading, getData, deleteData } = useFetch(null);
 	// TODO arreglar filtros
 	const filters = [
 		{ id: 1, nombre: 'descripcion', descrip: 'Evento' },
@@ -29,31 +28,47 @@ export default function ListEvento({ title }) {
 		const modalNivel = 2;
 		const tittle = 'Asignar staff a evento';
 		openModal(
-			<Staffs staffEvent={''} edit={false} riviewList={updateList} />,
+			<Staffs staffEvento={''} edit={false}/>,
 			null,
-			'small',
+			'medio',
 			tittle,
 			modalNivel,
 		);
 	}
 
-	function handleEdit(evento) {
+	// no se usa, es mejor eliminar el staffEvent y volverlo a crear
+	function handleEdit(eventStaff) {
 		const modalNivel = 2;
 		const tittle = 'Edición de relación de staff y evento';
 		openModal(
-			<Staffs staffEvent={staffEvento} edit={true} riviewList={updateList} />,
+			<Staffs staffEvento={eventStaff} edit={true} />,
 			null,
-			'small',
+			'medio',
 			tittle,
 			modalNivel,
 		);
 	}
 
-	const updateList = async () => {
-		if(!error){
-			await getStaffEventos();
-		}
-	};
+	function handleDelete(eventStaff) {
+		Swal.fire({
+			title: 'Eliminar registro',
+			text: '¿Estás seguro de eliminar este registro?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: '¡Sí, eliminarlo!',
+			cancelButtonText: 'Cancelar',
+		}).then(async (result) => {
+			if (result.isConfirmed) {
+				const result = await deleteData(urlHistory, eventStaff.id);
+				if (result && result.status === 200) {
+					Swal.fire('Éxito', 'El registro ha sido eliminado.', 'success');
+					getStaffEventos();
+				} else {
+					Swal.fire('Error', 'El registro no ha sido eliminado.', 'error');
+				}
+			}
+		});
+	}
 
 	const nextPage = (pagItems, pageCurrent) => {
 		setItemsPage(pagItems);
@@ -65,7 +80,7 @@ export default function ListEvento({ title }) {
 	};
 
 	const getStaffEventos = async () => {
-		const url = `${hostServer}/api/v2/histories`; // TODO cambiar url
+		const url = `${hostServer}/api/v2/histories`;
  		const result = await getData(url);
 		if(result === null){
 			setError(true);
@@ -151,15 +166,15 @@ export default function ListEvento({ title }) {
 															{staffEvent.event.academia}
 														</td>
 														<td>
-															<TbEdit
+															<FaTrashAlt
 																className=".btnShow"
 																style={{
 																	fontSize:
 																		'25px',
 																}}
 																onClick={() =>
-																	handleEdit(
-																		eventStaff
+																	handleDelete(
+																		staffEvent
 																	)
 																}
 															/>

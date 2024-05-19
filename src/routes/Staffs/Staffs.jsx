@@ -6,7 +6,7 @@ import { useForm } from '../../hooks/useForm';
 import { useAppContext } from '../../hooks/appContext';
 import Swal from 'sweetalert2';
 
-export default function Staffs({ staffEvento, edit, riviewList }) {
+export default function Staffs({ staffEvento, edit }) {
 	const { HandleNivelClose } = useAppContext();
 	const hostServer = import.meta.env.VITE_REACT_APP_SERVER_HOST;
 	const api = `${hostServer}/api/v2/history/:event/:id`;
@@ -52,14 +52,12 @@ export default function Staffs({ staffEvento, edit, riviewList }) {
 
 		// TODO validar que funcione
 		if (!numError) {
-			if (!edit) {
-				console.log('formData', formData);
-				const staffEvento = await createData(api, formData);
-				if (staffEvento) {
-					clearForm();
-				}
+			const staffEvento = await createData(api, formData);
+			if (staffEvento) {
+				clearForm();
+				HandleNivelClose();
 			} else {
-				await updateData(api, staffEvento.id, formData); // TODO probar
+				setError(true);
 			}
 		} else {
 			Swal.fire({
@@ -73,7 +71,7 @@ export default function Staffs({ staffEvento, edit, riviewList }) {
 	};
 
 	useEffect(() => {
-/* 		if (data?.message) {
+		/* if (data?.message) {
 			data?.message &&
 				Swal.fire({
 					position: 'top-end',
@@ -104,11 +102,9 @@ export default function Staffs({ staffEvento, edit, riviewList }) {
 			}
 			if (data?.status === 200) {
 				HandleNivelClose();
-				riviewList();
 			}
 			if (data?.status === 201) {
 				clearForm();
-				riviewList();
 			}
 		} */
 	}, [data]);
@@ -124,7 +120,8 @@ export default function Staffs({ staffEvento, edit, riviewList }) {
 					<h3>Cargando...</h3>
 				) :
 				error ? (
-					errorMessage()
+					errorMessage(),
+					setError(false)
 				) : (
 					<div className="container my-5 px-5">
 						<form onSubmit={handleSubmit}>
