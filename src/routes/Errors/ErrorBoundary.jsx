@@ -4,11 +4,11 @@ import { useRouteError } from 'react-router-dom';
 export default function ErrorBoundary() {
 
   const error = useRouteError();
-  console.error(error);
+  error ? console.error(error) : console.log('no hay un error especifico');
     
   return (
     <div>
-      {`Ocurrio un error cargando la ruta ${error.error.message}`}
+      {`Ocurrio un error cargando la ruta ${error?.error ? error.error.message : ''}`}
     </div>
   )
 }
