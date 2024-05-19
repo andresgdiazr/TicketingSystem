@@ -19,6 +19,7 @@ import FunkTickets from '../FunkTickets';
 import ErrorBoundary from './Errors/ErrorBoundary';
 import ErrorNoAutorizado from './Errors/ErrorNoAutorizado';
 import ListStaffs from './Staffs/ListStaffs';
+import InitUser from './UserInit/InitUser';
 
 const routes = [
 	{ 	
@@ -89,6 +90,10 @@ const routes = [
 			{
 				path: 'login',
 				element: <Login title={'Login'} />,
+			},
+			{
+				path: 'init-user',
+				element: <InitUser title={'Gestión de Usuários'} />,
 			},
 			{ path: 'cambioClave', element: <Cambio /> },
 			{ path: 'logout', element: <Logout /> },
