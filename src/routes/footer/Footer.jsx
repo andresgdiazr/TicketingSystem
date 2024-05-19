@@ -8,10 +8,10 @@ import './footer.css';
 
 export default function Footer() {
 	return (
-		<footer className="w-full bg-gray-200">
-			<section className="w-full grid grid-cols-1 lg:grid-cols-3 px-6 lg:px-12 py-6 gap-3">
-				<div className="">
-					<h4 className="text-blue-500 text-xl font-semibold mb-6">
+		<footer className="w-full bg-gray-200 h-[20vh] flex flex-col">
+			<section className="w-full h-3/4 row">
+				<div className="col-sm-12 col-md-6 p-6">
+					<h4 className="text-gray-900 text-xl font-semibold mb-2">
 						Puntos de Contactos
 					</h4>
 					{/* <h5 className="linea">____________</h5> */}
@@ -30,8 +30,8 @@ export default function Footer() {
 						</li>
 					</ul>
 				</div>
-				<div className="">
-					<h4 className="text-blue-500 text-xl font-semibold mb-6">
+				<div className="col-sm-12 col-md-6 p-6">
+					<h4 className="text-gray-900 text-xl font-semibold mb-2">
 						Acerca de nosotros
 					</h4>
 					<p>
@@ -42,7 +42,7 @@ export default function Footer() {
 					</p>
 				</div>
 			</section>
-			<section className="w-full flex justify-center p-2 bg-blue-500">
+			<section className="w-full h-1/4 flex justify-center p-2 bg-gray-800">
 				<p className="text-sm text-gray-50 font-light">
 					Copyright 2024 - FUNK UP DANCE STUDIO - Todos los derechos
 					reservados.

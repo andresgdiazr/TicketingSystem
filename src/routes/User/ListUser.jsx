@@ -112,10 +112,11 @@ export default function ListUser() {
 				// ) : error ? (
 				//   <h3>Error de comunicación con el Servidor...</h3>
 				selectedItems && (
-					<div className="marco w-full h-full">
-						<h1 className="my-3 text-2xl font-bold">
+					<div className="marco w-full h-full p-4 px-5">
+						<h1 className="my-3 text-2xl font-bold text-gray-800">
 							Gestión de Usuarios
 						</h1>
+						<hr className="mb-4 text-blue-500"/>
 						<div className="tittle-search">
 							<div className="search">
 								<Buscador
@@ -124,7 +125,8 @@ export default function ListUser() {
 									onPageChange={handlePageChange}
 								/>
 							</div>
-							<button className="addBtn" onClick={handleAddUsers}>
+							<button className="addBtn font-medium" onClick={handleAddUsers}>
+								Agregar
 								<IoMdAdd />
 							</button>
 						</div>

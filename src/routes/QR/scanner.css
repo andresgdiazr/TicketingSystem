@@ -17,7 +17,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 3rem;
+  /* margin-top: 3rem; */
 }
 .scannerqr h2 {
     margin-bottom: 1rem;
@@ -46,7 +46,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
+  height: 40vh;
 }
 
 #reader__scan_region img{

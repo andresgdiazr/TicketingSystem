@@ -166,8 +166,9 @@ export default function ListVerifyEvent({ title }) {
       ) : (
         selectedItems && (
           <>
-            <div className="marco">
-              <h1 className="my-3 font-extrabold text-2xl">Descarga de Reportes</h1>
+            <div className="marco px-5">
+              <h1 className="my-3 text-2xl font-bold text-gray-800">Descarga de Reportes</h1>
+              <hr className="mb-4 text-blue-500"/>
               <div className="row mt-3">
                 <div className="form-group col-md-12">
                   <label htmlFor="evento">Seleccione Evento</label>

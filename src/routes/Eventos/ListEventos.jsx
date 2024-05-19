@@ -114,11 +114,11 @@ export default function ListEvento({ title }) {
 			) : (
 				selectedItems && (
 					<>
-						<div className="marco w-full h-full">
-							<h1 className="my-3 text-2xl font-bold">
+						<div className="marco w-full h-full px-5">
+							<h1 className="my-3 text-2xl font-bold text-gray-800">
 								Gestión de Eventos
 							</h1>
-							<hr className="my-2 mb-4"/>
+							<hr className="mb-4 text-blue-500"/>
 							<div className="tittle-search">
 								<div className="search">
 									<Buscador
@@ -128,9 +128,10 @@ export default function ListEvento({ title }) {
 									/>
 								</div>
 								<button
-									className="addBtn"
+									className="addBtn font-medium"
 									onClick={handleAddEventos}
 								>
+									Agregar
 									<IoMdAdd />
 								</button>
 							</div>

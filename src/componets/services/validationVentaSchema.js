@@ -12,8 +12,8 @@ const validationVentaSchema = {
   emailComprador: [
     (value) =>
       value.trim() === "" ? "El Email del Comprador es requerído" : undefined,
-    (value) =>
-      !/^\S+@\S+\.\S+$/.test(value) ? "Email no es válido" : undefined,
+    // (value) =>
+    //   /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]/.test(value) ? "Email no es válido" : undefined,
   ],
   nomtoPago: [
     (value) =>
