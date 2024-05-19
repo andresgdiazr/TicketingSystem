@@ -16,13 +16,18 @@ import Logout from '../routes/User/Logout';
 import PrivateRoute from './PrivateRoute';
 import { createBrowserRouter } from 'react-router-dom';
 import FunkTickets from '../FunkTickets';
+import ErrorBoundary from './Errors/ErrorBoundary';
+import ErrorNoAutorizado from './Errors/ErrorNoAutorizado';
+import ListStaffs from './Staffs/ListStaffs';
 
 const routes = [
 	{ 	
 		path: '/',
 		element: <FunkTickets />,
+		errorElement: <ErrorBoundary/>,
 		children: [
 			{ index: true, element: <Home title={'Home'} /> },
+			{ path: 'error', element: <ErrorNoAutorizado/>},
 			{
 				path: 'students',
 				element: <Students title={'Gestión de Estudiantes'} />,
@@ -39,6 +44,10 @@ const routes = [
 					{ 
 						path: 'ventaTicket',
 						element: <VentaEntrada title={'Venta de Entradas'} />
+					},
+					{ 
+						path: 'staffs',
+						element: <ListStaffs title={'Gestión de Staffs'} />,
 					},
 				]
 			},

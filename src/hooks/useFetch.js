@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useUsersContext } from "./UsersContext";
 
+
 export const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsloading] = useState(true);
@@ -29,6 +30,18 @@ export const useFetch = (url) => {
           status: response.status,
           data: await responseData,
         };
+
+        if(response.status === 403){
+          const data = {
+            status: 403,
+            message: "Usuario no tiene permiso",
+            exito: false,
+            errorSystem: await result.data.message,
+          };
+          setData(data);
+          return null;
+        }
+
         setData(result);
         return result;
       }

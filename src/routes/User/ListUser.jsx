@@ -49,7 +49,9 @@ export default function ListUser() {
 	}
 
 	const updateList = async () => {
-		await getUsers();
+		if(!error){
+			await getUsers();
+		}
 	};
 
 	const handleDel = async (id) => {
@@ -91,6 +93,9 @@ export default function ListUser() {
 	const getUsers = async () => {
 		const url = `${hostServer}/api/v2/users`;
 		const result = await getData(url);
+		if (result === null){
+			setError(true);
+		}
 	};
 
 	useEffect(() => {
@@ -101,7 +106,9 @@ export default function ListUser() {
 	}, [data]);
 
 	useEffect(() => {
-		getUsers();
+		if(!error){
+			getUsers();
+		}
 	}, []);
 
 	return (
@@ -125,10 +132,12 @@ export default function ListUser() {
 									onPageChange={handlePageChange}
 								/>
 							</div>
-							<button className="addBtn font-medium" onClick={handleAddUsers}>
-								Agregar
-								<IoMdAdd />
-							</button>
+							{
+								!error ? <button className="addBtn font-medium" onClick={handleAddUsers}>
+									Agregar
+									<IoMdAdd />
+								</button> : null
+							}
 						</div>
 						<div className="table-responsive">
 							<table className="table table-striped table-bordered">
@@ -144,13 +153,12 @@ export default function ListUser() {
 										</th>
 									</tr>
 								</thead>
-								{data?.status === 500 ? (
+								{data?.status === 500 | data?.status === 403 ? (
 									<tbody>
 										<tr>
 											<td scope="col" colSpan={7}>
 												<h3 className="textCenter">
-													No hay información para esta
-													Entidad.
+													{!error ? "No hay información para esta Entidad" : "Usuario no tiene permiso"}
 												</h3>
 											</td>
 										</tr>
