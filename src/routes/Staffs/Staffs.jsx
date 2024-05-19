@@ -29,16 +29,17 @@ export default function Staffs({ staffEvento, edit }) {
 	let {
 		data,
 		isLoading = false,
-		getData,
 		createData,
 		updateData,
 	} = useFetch(null);
+
+	let { getData } = useFetch(null);
 
 	const getInitData = async () => {
 		const resultEvents = await getData(urlEvents);
 		if (resultEvents) {
 			setEventos(resultEvents.data.data);
-		}
+		} 
 
 		const resultUsers = await getData(urlUsers);
 		if (resultUsers) {
@@ -50,14 +51,13 @@ export default function Staffs({ staffEvento, edit }) {
 		e.preventDefault();
 		const numError = validateForm();
 
-		// TODO validar que funcione
 		if (!numError) {
 			const staffEvento = await createData(api, formData);
 			if (staffEvento) {
 				clearForm();
 				HandleNivelClose();
 			} else {
-				setError(true);
+				console.log('Error al crear el staffEvento')
 			}
 		} else {
 			Swal.fire({
@@ -71,7 +71,7 @@ export default function Staffs({ staffEvento, edit }) {
 	};
 
 	useEffect(() => {
-		/* if (data?.message) {
+		if (data?.message) {
 			data?.message &&
 				Swal.fire({
 					position: 'top-end',
@@ -106,7 +106,7 @@ export default function Staffs({ staffEvento, edit }) {
 			if (data?.status === 201) {
 				clearForm();
 			}
-		} */
+		}
 	}, [data]);
 
 	useEffect(() => {
@@ -115,85 +115,82 @@ export default function Staffs({ staffEvento, edit }) {
 
 	return (
 		<>
-			{
-				isLoading ? (
-					<h3>Cargando...</h3>
-				) :
-				error ? (
-					errorMessage(),
-					setError(false)
-				) : (
-					<div className="container my-5 px-5">
-						<form onSubmit={handleSubmit}>
-							<div className="row mt-3">
-								<div className="col-md-6">
-									<label htmlFor="eventCodigo">Evento</label>
-									<select
-										className="form-control"
-										name="eventCodigo"
-										value={eventCodigo}
-										onChange={onInputChange}
-									>
-										<option>
-											Seleccione el evento
-										</option>
-										{eventos.map((ev) => {
-											return (
-												<option
-													key={ev.id}
-													value={ev.codigo}
-												>
-													{ev.descripcion}
-												</option>
-											);
-										})}
-									</select>{' '}
-								</div>
-							</div>
+			{//isLoading ? (
+				//<h3 className="mt-5 text-center">Cargando...</h3>
+			//) : (
+			error ? (
+				errorMessage()
+			) : (
+				<div className="container my-5 px-5">
+					<form onSubmit={handleSubmit}>
+						<div className="row mt-3">
 							<div className="col-md-6">
-								<label htmlFor="UserId">Usuario</label>
+								<label htmlFor="eventCodigo">Evento</label>
 								<select
 									className="form-control"
-									name="UserId"
-									value={UserId}
+									name="eventCodigo"
+									value={eventCodigo}
 									onChange={onInputChange}
 								>
 									<option>
-										Seleccione el usuario
+										Seleccione el evento
 									</option>
-									{users.map((ev) => {
+									{eventos.map((ev) => {
 										return (
 											<option
 												key={ev.id}
-												value={ev.id}
+												value={ev.codigo}
 											>
-												{ev.email}
+												{ev.descripcion}
 											</option>
 										);
 									})}
 								</select>{' '}
 							</div>
-							<div className="btn-submit mt-4">
-								{edit ? (
-									<button
-										type="submit"
-										className="btn btn-primary w-100"
-									>
-										Actualizar
-									</button>
-								) : (
-									<button
-										type="submit"
-										className="btn btn-primary w-100"
-									>
-										Agregar
-									</button>
-								)}
-							</div>
-						</form>
-					</div>
-				)
-			}
+						</div>
+						<div className="col-md-6">
+							<label htmlFor="UserId">Usuario</label>
+							<select
+								className="form-control"
+								name="UserId"
+								value={UserId}
+								onChange={onInputChange}
+							>
+								<option>
+									Seleccione el usuario
+								</option>
+								{users.map((ev) => {
+									return (
+										<option
+											key={ev.id}
+											value={ev.id}
+										>
+											{ev.email}
+										</option>
+									);
+								})}
+							</select>{' '}
+						</div>
+						<div className="btn-submit mt-4">
+							{edit ? (
+								<button
+									type="submit"
+									className="btn btn-primary w-100"
+								>
+									Actualizar
+								</button>
+							) : (
+								<button
+									type="submit"
+									className="btn btn-primary w-100"
+								>
+									Agregar
+								</button>
+							)}
+						</div>
+					</form>
+				</div>
+			)}
 		</>
 	);
 }
