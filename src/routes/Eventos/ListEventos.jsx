@@ -126,7 +126,6 @@ export default function ListEvento({ title }) {
 							<h1 className="my-3 text-2xl font-bold">
 								Gestión de Eventos
 							</h1>
-							<hr className="my-2 mb-4"/>
 							<div className="tittle-search">
 								<div className="search">
 									<Buscador

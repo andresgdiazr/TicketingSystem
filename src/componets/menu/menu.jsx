@@ -63,7 +63,8 @@ function Menu({ isVisible }) {
 					route: '/events',
 					subItems: [
 						{ title: 'Eventos', route: '/events' },
-						{ title: 'Ventas', route: '/events/ventaTicket' }
+						{ title: 'Ventas', route: '/events/ventaTicket' },
+						{ title: 'Staffs', route: '/events/staffs' }
 					],
 					icon: <FaTicket />
 				},

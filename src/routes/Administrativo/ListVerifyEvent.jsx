@@ -168,6 +168,7 @@ export default function ListVerifyEvent({ title }) {
           <>
             <div className="marco">
               <h1 className="my-3 font-extrabold text-2xl">Descarga de Reportes</h1>
+
               <div className="row mt-3">
                 <div className="form-group col-md-12">
                   <label htmlFor="evento">Seleccione Evento</label>

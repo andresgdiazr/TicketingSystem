@@ -18,6 +18,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import FunkTickets from '../FunkTickets';
 import ErrorBoundary from './Errors/ErrorBoundary';
 import ErrorNoAutorizado from './Errors/ErrorNoAutorizado';
+import ListStaffs from './Staffs/ListStaffs';
 
 const routes = [
 	{ 	
@@ -43,6 +44,10 @@ const routes = [
 					{ 
 						path: 'ventaTicket',
 						element: <VentaEntrada title={'Venta de Entradas'} />
+					},
+					{ 
+						path: 'staffs',
+						element: <ListStaffs title={'Gestión de Staffs'} />,
 					},
 				]
 			},
