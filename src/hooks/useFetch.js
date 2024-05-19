@@ -5,7 +5,7 @@ export const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsloading] = useState(true);
   const user = useUsersContext();
-
+  console.log(user)
   const fetchData = async (url, method = "GET", formData = null) => {
     setIsloading(true);
     try {
