@@ -5,12 +5,14 @@ import { useAppContext } from '../../hooks/appContext';
 import Swal from 'sweetalert2';
 import ValidateErrors from '../../componets/services/ValidateErrors';
 import validationSchema from '../../componets/services/validationUserSchema';
+import { useNavigate } from 'react-router-dom';
 
-export default function InitUser({ user, edit, riviewList }) {
+export default function InitUser({ user }) {
 	const { HandleNivelClose } = useAppContext();
 	const hostServer = import.meta.env.VITE_REACT_APP_SERVER_HOST;
 	const api = `${hostServer}/api/v2/user`;
 	const [error, setError] = useState(false);
+	const navigate = useNavigate();
 
 	const roles = [
 		{id:1, role: 'admin', descrip:'administrador'},
@@ -48,10 +50,9 @@ export default function InitUser({ user, edit, riviewList }) {
 		const numError = validateForm();
 		if (!numError) {
 			let url = `${api}`;
-			if (!edit) {
-				await createData(url, formData);
-			} else {
-				await updateData(url, user.id, formData);
+			await createData(url, formData);
+			if (data?.status === 200) {
+				clearForm();
 			}
 		} else {
 			Swal.fire({
@@ -84,12 +85,10 @@ export default function InitUser({ user, edit, riviewList }) {
 					timer: 3500,
 				});
 			if (data?.status === 200) {
-				HandleNivelClose();
-				riviewList();
+				navigate('/');
 			}
 			if (data?.status === 201) {
 				clearForm();
-				riviewList();
 			}
 		}
 	}, [data]);
@@ -187,22 +186,13 @@ export default function InitUser({ user, edit, riviewList }) {
 								</div>											
 							</div>
 							<div className="btn-submit mt-4">
-								{edit ? (
-									<button
-										onClick={handleSubmit}
-										className="btn btn-primary w-100"
-									>
-										Actualizar
-									</button>
-								) : (
-									<button
-										onClick={handleSubmit}
-										type="submit"
-										className="btn btn-primary w-100"
-									>
-										Agregar
-									</button>
-								)}
+								<button
+									onClick={handleSubmit}
+									type="submit"
+									className="btn btn-primary w-100"
+								>
+									Agregar
+								</button>
 							</div>
 						</form>
 					</div>
