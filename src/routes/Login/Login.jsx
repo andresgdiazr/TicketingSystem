@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
-// importar de firebase
-import { useFetch } from "../../hooks/useFetch";
 import { useUsersContext } from "../../hooks/UsersContext";
 import { Navigate } from "react-router-dom";
 import './login.css';
+import bgdance from '../../assets/bg-dance.webp';
+
 const Login = ({ title }) => {
   const user = useUsersContext();
 
@@ -21,12 +20,12 @@ const Login = ({ title }) => {
       ) : (
         <div className="h-[100vh] relative w-full">
           <div className="h-full absolute top-0 left-0 z-[-1]">
-            <img className="h-full object-cover" src="/src/assets/bg-dance.webp" alt="bg-dance" />
+            <img className="h-full object-cover" src={bgdance} alt="bg-dance" />
           </div>
           <div className="z-100 w-full h-full flex justify-center items-center">
             <div action="" className="form w-[80vw] md:w-[40vw] h-[50vh] md:h-auto">
               <p>
-                  Bienvenido,<span>Iniciar sesión con</span>
+                  Bienvenido<span>Inicie sesión con</span>
               </p>
               <button className="oauthButton" onClick={loginWithGoogle}>
                   <svg className="icon" viewBox="0 0 24 24">

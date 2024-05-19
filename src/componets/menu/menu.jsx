@@ -87,6 +87,7 @@ function Menu({ isVisible }) {
 		menuItems = [
 			{	title: 'Home', route: '/', subItems: [], icon: <FaHome />},
 			{ 	title: 'Iniciar sesión', route: '/login', subItems: [], icon: <FaKey /> },
+			{   title: 'Crear Usuario de prueba',	route: '/init-user', subItems: [], icon: <FaGear />	},
 		];
 	}
 
