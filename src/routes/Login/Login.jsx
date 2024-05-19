@@ -21,7 +21,7 @@ const Login = ({ title }) => {
       ) : (
         <div className="h-[100vh] relative w-full">
           <div className="h-full absolute top-0 left-0 z-[-1]">
-            <img className="h-full object-cover" src="/src/assets/bg-dance.webp" alt="bg-dance" />
+            <img className="h-full object-cover" src="./src/assets/bg-dance.webp" alt="bg-dance" />
           </div>
           <div className="z-100 w-full h-full flex justify-center items-center">
             <div action="" className="form w-[80vw] md:w-[40vw] h-[50vh] md:h-auto">
