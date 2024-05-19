@@ -107,9 +107,10 @@ export default function ListEvento({ title }) {
 				selectedItems && (
 					<>
 						<div className="marco w-full h-full">
-							<h1 className="my-3 text-2xl font-bold">
+							<h1 className="my-3 text-2xl font-bold text-gray-800">
 								Gestión de staffs por evento
 							</h1>
+							<hr className="mb-4 text-blue-500"/>
 							<div className="tittle-search">
 								<div className="search">
 									<Buscador

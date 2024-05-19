@@ -105,8 +105,8 @@ export default function User({ user, edit, riviewList }) {
 				) : (
 					<div className="container p-5">
 						<form>
-							<div className="row">
-								<div className="form-group col-md-6">
+							<div className="row gap-4">
+								<div className="form-group col-md-12">
 									<label htmlFor="nombre">Nombre</label>
 									<input
 										type="text"
@@ -117,9 +117,7 @@ export default function User({ user, edit, riviewList }) {
 										onChange={onInputChange}
 									/>
 								</div>
-							</div>
-							<div className="row mt-3">
-								<div className="form-group col-md-6">
+								<div className="form-group col-md-12">
 									<label htmlFor="email">
 										Correo electrónico
 									</label>
@@ -137,7 +135,7 @@ export default function User({ user, edit, riviewList }) {
 										/>
 									)}
 								</div>
-								<div className="form-group col-md-6">
+								<div className="form-group col-md-12">
 									<label htmlFor="role">Rol</label>
 									<select
 										className="form-control"
@@ -158,10 +156,8 @@ export default function User({ user, edit, riviewList }) {
 											);
 										})}
 									</select>
-								</div>
-							</div>
-							<div className="row mt-3">
-								<div className="form-group col-md-4">
+								</div>		
+								<div className="form-group col-md-12">
 									<label htmlFor="status">
 										Condición del usuario
 									</label>
@@ -183,7 +179,7 @@ export default function User({ user, edit, riviewList }) {
 											);
 										})}
 									</select>
-								</div>
+								</div>													
 							</div>
 							<div className="btn-submit mt-4">
 								{edit ? (

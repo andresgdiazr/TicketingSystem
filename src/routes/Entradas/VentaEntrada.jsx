@@ -226,10 +226,11 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 				error ? (
 					errorMessage()
 				) : (
-					<div className="h-full w-full p-4">
-						<h1 className="my-3 text-2xl font-bold">
+					<div className="h-full w-full p-4 px-5">
+						<h1 className="my-3 text-2xl font-bold text-gray-800">
 							Venta de Entradas
 						</h1>
+						<hr className="mb-4 text-blue-500"/>
 						<form>
 							<div className="row mt-8">
 								<div className="form-group col-md-6">
@@ -285,7 +286,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 								</div>
 							</div>
 								
-							<div className="row mt-3">
+							<div className="row mt-8">
 								<div className="form-group col-md-6">
 									<label htmlFor="emailComprador">
 										Correo Electrónico del Comprador
@@ -317,6 +318,8 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 										onChange={onInputChange}
 									/>
 								</div>
+							</div>
+							<div className="row mt-8">
 								<div className="form-group col-md-6">
 									<label htmlFor="cantidad">
 										Cantidad de Entradas
@@ -357,7 +360,7 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 									
 								</div>
 							</div>
-							<div className="btn-submit mt-4">
+							<div className="btn-submit mt-8">
 								{edit ? (
 									<button
 										onClick={handleSubmit}

@@ -122,8 +122,8 @@ export default function ListEvento({ title }) {
 			) : (
 				selectedItems && (
 					<>
-						<div className="marco w-full h-full">
-							<h1 className="my-3 text-2xl font-bold">
+						<div className="marco w-full h-full px-5">
+							<h1 className="my-3 text-2xl font-bold text-gray-800">
 								Gestión de Eventos
 							</h1>
 							<div className="tittle-search">
@@ -136,9 +136,10 @@ export default function ListEvento({ title }) {
 								</div>
 								{
 									!error ? <button
-									className="addBtn"
+									className="addBtn font-medium"
 									onClick={handleAddEventos}
 								>
+									Agregar
 									<IoMdAdd />
 								</button> : null
 								}

@@ -181,9 +181,9 @@ export default function Evento({ evento, edit, riviewList }) {
 										onChange={onInputChange}
 									/>
 									{errorsInput.descripcion && (
-										<ValidateErrors
-											errors={errorsInput.descripcion}
-										/>
+										<p className="pt-1 block text-red-500 text-xs">
+										Nombre del evento requerido
+									   </p>
 									)}{' '}
 								</div>
 								<div className="form-group col-md-6">
@@ -199,9 +199,9 @@ export default function Evento({ evento, edit, riviewList }) {
 										onChange={onInputChange}
 									/>
 									{errorsInput.academia && (
-										<ValidateErrors
-											errors={errorsInput.academia}
-										/>
+										<p className="pt-1 block text-red-500 text-xs">
+											Nombre de la academia requerido
+									   	</p>
 									)}{' '}
 								</div>
 							</div>
@@ -217,9 +217,9 @@ export default function Evento({ evento, edit, riviewList }) {
 										onChange={onInputChange}
 									/>
 									{errorsInput.ubicacion && (
-										<ValidateErrors
-											errors={errorsInput.ubicacion}
-										/>
+										<p className="pt-1 block text-red-500 text-xs">
+											La ubicacion del evento es requerida
+									   	</p>
 									)}
 								</div>
 							</div>
@@ -237,9 +237,9 @@ export default function Evento({ evento, edit, riviewList }) {
 										onChange={onInputChange}
 									/>
 									{errorsInput.costo && (
-										<ValidateErrors
-											errors={errorsInput.costo}
-										/>
+										<p className="pt-1 block text-red-500 text-xs">
+											El costo de entradas es requerido
+									   	</p>
 									)}{' '}
 								</div>
 								<div className="form-group col-md-6">
@@ -255,9 +255,9 @@ export default function Evento({ evento, edit, riviewList }) {
 										onChange={onInputChange}
 									/>
 									{errorsInput.extra && (
-										<ValidateErrors
-											errors={errorsInput.extra}
-										/>
+										<p className="pt-1 block text-red-500 text-xs">
+											Cantidad extra requerida
+									   	</p>
 									)}{' '}
 								</div>
 							</div>
@@ -277,6 +277,11 @@ export default function Evento({ evento, edit, riviewList }) {
 										onChange={onInputChange}
 										required
 									/>
+									{errorsInput.fecha && (
+										<p className="pt-1 block text-red-500 text-xs">
+											Fecha del evento requerida
+									   	</p>
+									)}{' '}
 								</div>
 								<div className="form-group col-md-6">
 									<label htmlFor="hora">
@@ -290,8 +295,40 @@ export default function Evento({ evento, edit, riviewList }) {
 										value={hora}
 										onChange={onInputChange}
 									/>
+									{errorsInput.fecha && (
+										<p className="pt-1 block text-red-500 text-xs">
+											Hora del evento requerida
+									   	</p>
+									)}{' '}
 								</div>
+								<div className='col-md-6 mt-3'>
+									<label htmlFor="file">
+										Seleccione un archivos CSV
+									</label>
+									<div className="grid w-full items-center gap-1.5"> {/* TODO esto quizas se manda y no deberia, esta dentro del form y tiene un input pues */}
+										<input
+											className=' file:cursor-pointer file:p-2 flex w-full rounded-md border border-blue-300 border-input bg-white text-sm text-gray-700 file:border-0 file:bg-blue-600 file:text-white file:text-sm file:font-medium'
+											type="file"
+											name="file"
+											accept=".csv"
+											onChange={changeFileHandler}
+											// style={{ display: "block", margin: "10px auto" }}
+										/>
+										{isValidCSV ? (
+											<div>
+												<p>El archivo seleccionado no es un CSV válido.</p>
+											</div>
+										) : (
+										<div>
+											<p></p>
+											</div>
+										)}
+									</div>									
+								</div>								
 							</div>
+
+						
+
 							<div className="btn-submit mt-4">
 								{edit ? (
 									<button
@@ -310,24 +347,7 @@ export default function Evento({ evento, edit, riviewList }) {
 								)}
 							</div>
 						</form>
-						<div className="row mt-3"> {/* TODO esto quizas se manda y no deberia, esta dentro del form y tiene un input pues */}
-							<input
-								type="file"
-								name="file"
-								accept=".csv"
-								onChange={changeFileHandler}
-								style={{ display: "block", margin: "10px auto" }}
-							/>
-							{isValidCSV ? (
-       							 <div>
-          							<p>El archivo seleccionado no es un CSV válido.</p>
-        						</div>
-      						) : (
-       						 <div>
-        						  <p></p>
-        						</div>
-      						)}
-						</div>
+
 					</div>
 				)
 			}
