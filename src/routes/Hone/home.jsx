@@ -15,11 +15,11 @@ const Home = () => {
 				</div>
 			</div>
 			<div className='absolute top-10 left-10 md:top-44 md:left-48  flex flex-col'>
-				<h2 className="m-0 font-extrabold text-3xl md:text-6xl lg:text-8xl text-gray-800">Bienvenido al</h2>
-				<h2 className="m-0 font-extrabold text-3xl md:text-6xl lg:text-8xl text-gray-800">Sistema de boletería de</h2>
-				<h2 className="m-0 font-extrabold text-3xl md:text-6xl lg:text-8xl text-fuchsia-700"> 
-				<span className='font-extrabold text-3xl md:text-6xl lg:text-8xl text-gray-800'>Funk </span>
-				<span  className='font-extrabold text-3xl md:text-6xl lg:text-8xl text-gray-800'>Up </span>
+				<h2 className="m-0 font-extrabold text-3xl md:text-2xl lg:text-7xl text-gray-800">Bienvenido al</h2>
+				<h2 className="m-0 font-extrabold text-3xl md:text-2xl lg:text-7xl text-gray-800">Sistema de boletería de</h2>
+				<h2 className="m-0 font-extrabold text-3xl md:text-2xl lg:text-7xl text-fuchsia-700"> 
+				<span className='font-extrabold text-3xl md:text-2xl lg:text-7xl text-gray-800'>Funk </span>
+				<span  className='font-extrabold text-3xl md:text-2xl lg:text-7xl text-gray-800'>Up </span>
 				Dance Studio</h2>
 				<p className="w-2/3 mt-4 font-medium text-base">
 						Antes de vender entradas para eventos, los organizadores
