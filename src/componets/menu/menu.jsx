@@ -60,6 +60,7 @@ function Menu({ isVisible }) {
 			auxi = [
 				initMenu[0],
 				{ 	title: 'Eventos',
+					route: '/events',
 					subItems: [
 						{ title: 'Eventos', route: '/events' },
 						{ title: 'Ventas', route: '/events/ventaTicket' }
