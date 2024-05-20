@@ -53,6 +53,12 @@ export const useFetch = (url) => {
     return resp;
   };
 
+  const getDataSelected = async (url,id) =>{
+    console.log(id);
+    const resp = await fetchData(`${url}/${id}`, "GET");
+    return resp;
+  };
+
   const createData = async (url, formData) => {
     const resp = await fetchData(url, "POST", formData);
     return resp;
@@ -96,5 +102,6 @@ export const useFetch = (url) => {
     deleteData,
     envioCorreo,
     updateDatas,
+    getDataSelected,
   };
 };

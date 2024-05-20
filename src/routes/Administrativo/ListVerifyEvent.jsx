@@ -24,10 +24,14 @@ export default function ListVerifyEvent({ title }) {
   const [eventos, setEventos] = useState([]);
   const [types, setTypes] = useState([]);
   const [items, setItems] = useState([]);
+  const [numEvents,setNumEvents] = useState([]);
+  const [numEvent,setNumEvent] = useState([]);
+  let { dataSelected, getDataSelected }= useFetch(null);
   // const [totalTicket, setTotalTicket] = useState(0);
   // const [totalPagado, setTotalPagado] = useState(0);
   // const [totalticketEvent, setTotalticketEvent] = useState(0);
   AccessProfil();
+
   let { data, isLoading, getData, deleteData } = useFetch(`${url}`);
   const filters = [{ id: 1, nombre: "comprador", descrip: "Comprador" }];
 
@@ -58,8 +62,20 @@ export default function ListVerifyEvent({ title }) {
     setSelectedItems(newSelectedItems);
   };
 
-  const handdleEvent = (e) => {
+  const handdleEvent = async (e) => {
+    
     setEvento(e.target.value);
+    console.log(e.target.value)
+    const url = `${hostServer}/api/v2/registers`;
+    const result = await getDataSelected(url,numEvent);
+   // console.log(result);
+    const result2 = result.data.data;
+    const result3 = result2.filter((item) => item.eventCodigo == e.target.value);
+    
+    setSelectedItems(result3);
+
+    
+    
   };
 
   const handdleType = (e) => {
@@ -68,10 +84,12 @@ export default function ListVerifyEvent({ title }) {
 
   const getEntradas = async () => {
     // se consultan los registros
+   /* console.log("Hola");
     const url = `${hostServer}/api/v2/registers`;
-    const result = await getData(url);
+    const result = await getDataSelected(url,1);
+    console.log(result)
     // setTotalEvent(result?.data.data);
-    setSelectedItems(result?.data.data);
+    setSelectedItems(result.data.data);*/
   };
 
   const getInitData = async () => {
@@ -180,7 +198,7 @@ export default function ListVerifyEvent({ title }) {
                     <option></option>
                     {eventos.map((evento) => {
                       return (
-                        <option key={evento.id} value={evento.descripcion}>
+                        <option key={evento.id} value={evento.codigo} label={evento.descripcion}>
                           {evento.descripcion}
                         </option>
                       );
@@ -241,8 +259,8 @@ export default function ListVerifyEvent({ title }) {
                       selectedItems.map((item) => {
                           return (
                             <tr key={item.id}>
-                              <td>{item.tipoRegistro}</td>
-                              <td>{item.nombreEvento}</td>
+                              <td>{item.tipo}</td>
+                              <td>{item.eventCodigo}</td>
                             </tr>
                           );
 
