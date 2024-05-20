@@ -1,7 +1,5 @@
-import Contact from '../Contacts/Contact';
-import BannerSlider from '../../componets/banner/BannerSlider';
 import imagen1 from '../../assets/imagen01.jpg';
-import imagen4 from '../../assets/imagen04.jpg';
+import bgdance from '../../assets/bg-dance.webp';
 
 const Home = () => {
 	const images = [imagen1];
@@ -11,7 +9,7 @@ const Home = () => {
 				{/* <div className='w-full md:w-1/3 bg-blue-100'>
 				</div> */}
 				<div className='w-full md:w-3/3'>
-					<img className='w-full h-full object-cover  filter blur-sm hover:blur-none' src="/src/assets/bg-dance.webp" alt="home" />
+					<img className='w-full h-full object-cover  filter blur-sm hover:blur-none' src={bgdance} alt="home" />
 				</div>
 			</div>
 			<div className='absolute top-10 left-10 md:top-44 md:left-48  flex flex-col'>
