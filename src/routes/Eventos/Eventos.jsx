@@ -56,14 +56,11 @@ export default function Evento({ evento, edit, riviewList }) {
 				// TODO revisar el await aqui, es mas probable que ni siquiera se haga esto de registrar estudiantes aqui sino más bien en el back, le pasamos parsedData y que evento llame a registrar estudiantes y a registrar tickets por batch
 
 				parsedData.map(async (estudiante) => {
-					console.log(estudiante.nombre + " " + estudiante.apellido);
 					formData2.nombre = estudiante.nombre + " " + estudiante.apellido;
 					await createData(apiStudent, formData2);
 				});
 
-				console.log("Entradas obligatoria-extra: " + parsedData.length*3 + "-" + formData.extra);
 				// registrar tickets
-				console.log(evento);
 
 				const formData3 = { 
 					nombreEvento: formData.descripcion,

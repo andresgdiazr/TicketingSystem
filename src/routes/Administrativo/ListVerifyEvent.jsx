@@ -65,10 +65,8 @@ export default function ListVerifyEvent({ title }) {
   const handdleEvent = async (e) => {
     
     setEvento(e.target.value);
-    console.log(e.target.value)
     const url = `${hostServer}/api/v2/registers`;
     const result = await getDataSelected(url,numEvent);
-   // console.log(result);
     const result2 = result.data.data;
     const result3 = result2.filter((item) => item.eventCodigo == e.target.value);
     
@@ -84,10 +82,9 @@ export default function ListVerifyEvent({ title }) {
 
   const getEntradas = async () => {
     // se consultan los registros
-   /* console.log("Hola");
+   /*
     const url = `${hostServer}/api/v2/registers`;
     const result = await getDataSelected(url,1);
-    console.log(result)
     // setTotalEvent(result?.data.data);
     setSelectedItems(result.data.data);*/
   };

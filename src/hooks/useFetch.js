@@ -6,7 +6,6 @@ export const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsloading] = useState(true);
   const user = useUsersContext();
-  console.log(user)
   const fetchData = async (url, method = "GET", formData = null) => {
     setIsloading(true);
     try {
@@ -46,7 +45,7 @@ export const useFetch = (url) => {
         return result;
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
       if (error.name !== "AbortError") {
         const data = {
           status: 500,
@@ -67,7 +66,6 @@ export const useFetch = (url) => {
   };
 
   const getDataSelected = async (url,id) =>{
-    console.log(id);
     const resp = await fetchData(`${url}/${id}`, "GET");
     return resp;
   };
@@ -88,7 +86,6 @@ export const useFetch = (url) => {
   };
 
   const updateDatas = async (url, formData) => {
-    console.log("AQUIIII")
     const resp = await fetchData(url, "PUT", formData);
     return resp;
   }
