@@ -9,9 +9,11 @@ function ScannerQr() {
 	const [scanResult, setScanResult] = useState(null);
 	const [isScanning, setIsScanning] = useState(true); // Estado para controlar si se está escaneando o no
 	const [isVerify, setIsVerify] = useState(0);
+	const hostServer = import.meta.env.VITE_REACT_APP_SERVER_HOST;
+	const api = `${hostServer}/api/v2/ConfirmarTickets/`;
 	const [saldo, setSaldo] = useState(0);
 	const [item, setItem] = useState([]);
-	let { data, getData } = useFetch(null);
+	let { data, updateDatas } = useFetch(null);
 
 	const handleNewScan = () => {
 		setSaldo(0);
@@ -33,42 +35,27 @@ function ScannerQr() {
 
 			const handleSuccess = async (result) => {
 				scanner.clear();
-				console.log("Escaneo de QR: ", result);
-				await getData(`${result}`);
-				setScanResult(result);
+				
+				const info ={
+					hash: result,
+				};
+
+				const resultado = await updateDatas(`${api}`, info);
+
+				setIsVerify(resultado.data.data)
+				setScanResult(true);
 				setIsScanning(false); // Detener el escaneo después de un resultado exitoso
 			};
 
 			const handleError = (err) => {
 				console.warn(err);
 			};
+
 			scanner.render(handleSuccess, handleError);
 		}
 	}, [isScanning]);
 
-	useEffect(() => {
-		if (data && data.status == 200) {
-			if (data.data) {
-				setItem(data.data.data);
-				console.log(data.data.data.estatus);
-				if (data.data.data.estatus == 'Vendido') {
-					setIsVerify(1);
-				}
-				else if (data.data.data.estatus == 'Generado') {
-					setIsVerify(2);
-				}
-				else {
-					setIsVerify(3);
-				}
-			}
-			else {
-				// la data no corresponde
-				setIsVerify(3);
-			}
-		} else {
-			setIsVerify(3);
-		}
-	}, [data]);
+	
 
 	return (
 		<div className="conteiner scannerqr w-full md:w-2/3 flex flex-col ">
@@ -101,7 +88,7 @@ function ScannerQr() {
 								<svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m13 14h-2v-5h2zm0 4h-2v-2h2zm-12 3h22l-11-19z" fill="#393a37"></path></svg>
 							</div>
 							<h5>
-								El ticket se encuentra en el sistema pero nunca se vendió.
+								El ticket ya ha sido utilizado.
 							</h5>
 						</div>
 					)}

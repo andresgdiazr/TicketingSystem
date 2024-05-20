@@ -82,6 +82,7 @@ export const useFetch = (url) => {
   };
 
   const updateDatas = async (url, formData) => {
+    console.log("AQUIIII")
     const resp = await fetchData(url, "PUT", formData);
     return resp;
   }
