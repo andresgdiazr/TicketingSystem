@@ -173,7 +173,6 @@ export default function Student({ student, edit, riviewList }) {
 		}
 		// setArreglo((prevArreglo) => [...prevArreglo, value]);
 
-		// console.log("ticketsStudent......:", arreglo.length);
 		// const existe = arreglo.find((item) => item == value);
 		// if (existe && arreglo.length > 1) {
 		//   Swal.fire({

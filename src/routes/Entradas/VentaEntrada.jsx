@@ -59,8 +59,6 @@ export default function VentaEntrada({ entrada, edit, riviewList }) {
 
 	let { getData } = useFetch(null);
 
-	console.log(formData);
-
 	const handleSubmit = async (e) => {
 	
 		e.preventDefault();

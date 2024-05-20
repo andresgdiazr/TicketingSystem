@@ -64,7 +64,6 @@ export default function ListContacts({ title, accion }) {
 	// }
 
 	const updateList = async () => {
-		console.log('pase por aqui');
 		await getContacts();
 	};
 
