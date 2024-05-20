@@ -53,7 +53,6 @@ export const UsersProvider = ({ children }) => {
             if (!token) {
               return;
             }
-            console.log("token", token);
             const resp = await fetchData(token);
             if (resp.status == 200) {
               const backtoken = token;

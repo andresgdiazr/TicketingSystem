@@ -57,7 +57,7 @@ export default function Staffs({ staffEvento, edit }) {
 				clearForm();
 				HandleNivelClose();
 			} else {
-				console.log('Error al crear el staffEvento')
+				console.error('Error al crear el staffEvento')
 			}
 		} else {
 			Swal.fire({

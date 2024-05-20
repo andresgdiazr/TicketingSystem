@@ -58,7 +58,6 @@ const Login = () => {
 					timer: 3500,
 				});
 		} else {
-			console.log(data);
 			if (data?.status === 200) {
 				setUsersContext(data.data.data);
 				navigate('/');
